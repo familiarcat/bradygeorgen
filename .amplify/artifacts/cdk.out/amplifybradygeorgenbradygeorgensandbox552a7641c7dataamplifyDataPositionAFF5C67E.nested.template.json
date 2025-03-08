@@ -1,0 +1,2270 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource542538C0Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataAmplifyTableManagerT432751A4": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "PositionTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource542538C0Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataAmplifyTableManagerT432751A4"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "Position-",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     },
+     {
+      "attributeName": "experienceId",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "globalSecondaryIndexes": [
+     {
+      "indexName": "gsi-Experience.positions",
+      "keySchema": [
+       {
+        "attributeName": "experienceId",
+        "keyType": "HASH"
+       }
+      ],
+      "projection": {
+       "projectionType": "ALL"
+      },
+      "provisionedThroughput": {
+       "Fn::If": [
+        "ShouldUsePayPerRequestBilling",
+        {
+         "Ref": "AWS::NoValue"
+        },
+        {
+         "ReadCapacityUnits": {
+          "Ref": "DynamoDBModelTableReadIOPS"
+         },
+         "WriteCapacityUnits": {
+          "Ref": "DynamoDBModelTableWriteIOPS"
+         }
+        }
+       ]
+      }
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/PositionTable/Default/Default"
+   }
+  },
+  "PositionIAMRoleB2BD4357": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Position-",
+                {
+                 "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Position-",
+                {
+                 "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "PositionIAMRole3bb3ee-",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/PositionIAMRole/Resource"
+   }
+  },
+  "PositionDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "PositionTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "PositionTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "PositionIAMRoleB2BD4357",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "PositionIAMRoleB2BD4357"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/PositionDataSource/Resource"
+   }
+  },
+  "QuerygetPositionpreAuth0FunctionQuerygetPositionpreAuth0FunctionAppSyncFunctionD69AF3DD": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetPositionpreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/ffc597e18023b530e6afcbe02cee647d49550fa9e77bd06f1dee09d8b1be8de3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/QuerygetPositionpreAuth0Function/QuerygetPositionpreAuth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetPositionauth0FunctionQuerygetPositionauth0FunctionAppSyncFunction4C2B2187": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetPositionauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0224a3e5097427da3f4460b5d6d2b86ad4195c9cb8da7bc13e7187eead1c3ae3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/QuerygetPositionauth0Function/QuerygetPositionauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetPositionpostAuth0FunctionQuerygetPositionpostAuth0FunctionAppSyncFunction72852BC4": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetPositionpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/QuerygetPositionpostAuth0Function/QuerygetPositionpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetPositionDataResolverFnQueryGetPositionDataResolverFnAppSyncFunction556AFE0E": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PositionDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetPositionDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "PositionDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/QueryGetPositionDataResolverFn/QueryGetPositionDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetPositionResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "getPosition",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetPositionpreAuth0FunctionQuerygetPositionpreAuth0FunctionAppSyncFunctionD69AF3DD",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetPositionauth0FunctionQuerygetPositionauth0FunctionAppSyncFunction4C2B2187",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetPositionpostAuth0FunctionQuerygetPositionpostAuth0FunctionAppSyncFunction72852BC4",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetPositionDataResolverFnQueryGetPositionDataResolverFnAppSyncFunction556AFE0E",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getPosition\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PositionTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/queryGetPositionResolver"
+   }
+  },
+  "QuerylistPositionspreAuth0FunctionQuerylistPositionspreAuth0FunctionAppSyncFunction3CAA1334": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistPositionspreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3e81312d4c75951808eda9fcd5f854c1925c0b819de0939f09c4fe2eebb190b8.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/QuerylistPositionspreAuth0Function/QuerylistPositionspreAuth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistPositionsauth0FunctionQuerylistPositionsauth0FunctionAppSyncFunctionD6A87D99": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistPositionsauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0224a3e5097427da3f4460b5d6d2b86ad4195c9cb8da7bc13e7187eead1c3ae3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/QuerylistPositionsauth0Function/QuerylistPositionsauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistPositionspostAuth0FunctionQuerylistPositionspostAuth0FunctionAppSyncFunctionF23D9DE7": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistPositionspostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/QuerylistPositionspostAuth0Function/QuerylistPositionspostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListPositionsDataResolverFnQueryListPositionsDataResolverFnAppSyncFunction2666E195": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PositionDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListPositionsDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "PositionDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/QueryListPositionsDataResolverFn/QueryListPositionsDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListPositionResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "listPositions",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistPositionspreAuth0FunctionQuerylistPositionspreAuth0FunctionAppSyncFunction3CAA1334",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistPositionsauth0FunctionQuerylistPositionsauth0FunctionAppSyncFunctionD6A87D99",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistPositionspostAuth0FunctionQuerylistPositionspostAuth0FunctionAppSyncFunctionF23D9DE7",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListPositionsDataResolverFnQueryListPositionsDataResolverFnAppSyncFunction2666E195",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listPositions\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PositionTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/queryListPositionsResolver"
+   }
+  },
+  "MutationcreatePositioninit0FunctionMutationcreatePositioninit0FunctionAppSyncFunctionA2CF1BDB": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreatePositioninit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationcreatePositioninit0Function/MutationcreatePositioninit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreatePositionpreAuth0FunctionMutationcreatePositionpreAuth0FunctionAppSyncFunctionE4479E99": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreatePositionpreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/39fb35c6f8e8573ffe3a63ba867cf543b05af129a104b387a44f03c3d85da0c3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationcreatePositionpreAuth0Function/MutationcreatePositionpreAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreatePositionauth0FunctionMutationcreatePositionauth0FunctionAppSyncFunction3A0B0F2A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreatePositionauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d637c1fb7301003b8a5ada269338cf2e8df6cc0dc412ef13acc6158d680b6d3e.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationcreatePositionauth0Function/MutationcreatePositionauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreatePositionpostAuth0FunctionMutationcreatePositionpostAuth0FunctionAppSyncFunction634B6717": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreatePositionpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationcreatePositionpostAuth0Function/MutationcreatePositionpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreatePositionDataResolverFnMutationCreatePositionDataResolverFnAppSyncFunction120F885A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PositionDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreatePositionDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e32d729cbe65ca103c34e9c4a22620b6273975f8fd75a55d609e4e5d722df0bc.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "PositionDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationCreatePositionDataResolverFn/MutationCreatePositionDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreatePositionResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "createPosition",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreatePositioninit0FunctionMutationcreatePositioninit0FunctionAppSyncFunctionA2CF1BDB",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreatePositionpreAuth0FunctionMutationcreatePositionpreAuth0FunctionAppSyncFunctionE4479E99",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreatePositionauth0FunctionMutationcreatePositionauth0FunctionAppSyncFunction3A0B0F2A",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreatePositionpostAuth0FunctionMutationcreatePositionpostAuth0FunctionAppSyncFunction634B6717",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreatePositionDataResolverFnMutationCreatePositionDataResolverFnAppSyncFunction120F885A",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createPosition\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PositionTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/mutationCreatePositionResolver"
+   }
+  },
+  "MutationupdatePositioninit0FunctionMutationupdatePositioninit0FunctionAppSyncFunction347C2E46": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdatePositioninit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationupdatePositioninit0Function/MutationupdatePositioninit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdatePositionpreAuth0FunctionMutationupdatePositionpreAuth0FunctionAppSyncFunction11477EB6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdatePositionpreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/39fb35c6f8e8573ffe3a63ba867cf543b05af129a104b387a44f03c3d85da0c3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationupdatePositionpreAuth0Function/MutationupdatePositionpreAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdatePositionauth0FunctionMutationupdatePositionauth0FunctionAppSyncFunctionB23D62E0": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PositionDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdatePositionauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/89f92efd98b1034df0e2497fe31a97de6975de554b8a22e0677d05d6efcafa59.vtl"
+    }
+   },
+   "DependsOn": [
+    "PositionDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationupdatePositionauth0Function/MutationupdatePositionauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdatePositionpostAuth0FunctionMutationupdatePositionpostAuth0FunctionAppSyncFunction582610BD": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdatePositionpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationupdatePositionpostAuth0Function/MutationupdatePositionpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdatePositionDataResolverFnMutationUpdatePositionDataResolverFnAppSyncFunction6A070700": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PositionDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdatePositionDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "PositionDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationUpdatePositionDataResolverFn/MutationUpdatePositionDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdatePositionResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "updatePosition",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdatePositioninit0FunctionMutationupdatePositioninit0FunctionAppSyncFunction347C2E46",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdatePositionpreAuth0FunctionMutationupdatePositionpreAuth0FunctionAppSyncFunction11477EB6",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdatePositionauth0FunctionMutationupdatePositionauth0FunctionAppSyncFunctionB23D62E0",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdatePositionpostAuth0FunctionMutationupdatePositionpostAuth0FunctionAppSyncFunction582610BD",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdatePositionDataResolverFnMutationUpdatePositionDataResolverFnAppSyncFunction6A070700",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updatePosition\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PositionTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/mutationUpdatePositionResolver"
+   }
+  },
+  "MutationdeletePositionpreAuth0FunctionMutationdeletePositionpreAuth0FunctionAppSyncFunction6FC3B50A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeletePositionpreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a2c0f8a4d76f659d130c8a445801845ae9d33e5cc2c5ecd610edc272d4bd46e3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationdeletePositionpreAuth0Function/MutationdeletePositionpreAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeletePositionauth0FunctionMutationdeletePositionauth0FunctionAppSyncFunction4FC6BB82": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PositionDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeletePositionauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e3416b4d47414f29c21e59a70e83bddb959ef0625854ed7fb0ca376573e99069.vtl"
+    }
+   },
+   "DependsOn": [
+    "PositionDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationdeletePositionauth0Function/MutationdeletePositionauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeletePositionpostAuth0FunctionMutationdeletePositionpostAuth0FunctionAppSyncFunction819213B9": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeletePositionpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationdeletePositionpostAuth0Function/MutationdeletePositionpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeletePositionDataResolverFnMutationDeletePositionDataResolverFnAppSyncFunctionE0464A38": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PositionDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeletePositionDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "PositionDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/MutationDeletePositionDataResolverFn/MutationDeletePositionDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeletePositionResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "deletePosition",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeletePositionpreAuth0FunctionMutationdeletePositionpreAuth0FunctionAppSyncFunction6FC3B50A",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeletePositionauth0FunctionMutationdeletePositionauth0FunctionAppSyncFunction4FC6BB82",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeletePositionpostAuth0FunctionMutationdeletePositionpostAuth0FunctionAppSyncFunction819213B9",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeletePositionDataResolverFnMutationDeletePositionDataResolverFnAppSyncFunctionE0464A38",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deletePosition\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PositionTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/mutationDeletePositionResolver"
+   }
+  },
+  "SubscriptiononCreatePositionauth0FunctionSubscriptiononCreatePositionauth0FunctionAppSyncFunction7FCE8613": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreatePositionauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e6da5a6e993df8b5fdc91086b71eb53e72a3a97c98836ef9c9257776f36c452b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/SubscriptiononCreatePositionauth0Function/SubscriptiononCreatePositionauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreatePositionpostAuth0FunctionSubscriptiononCreatePositionpostAuth0FunctionAppSyncFunction7575C0E5": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreatePositionpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/SubscriptiononCreatePositionpostAuth0Function/SubscriptiononCreatePositionpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreatePositionDataResolverFnSubscriptionOnCreatePositionDataResolverFnAppSyncFunction0EA55EFB": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreatePositionDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/SubscriptionOnCreatePositionDataResolverFn/SubscriptionOnCreatePositionDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreatePositionResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "onCreatePosition",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreatePositionauth0FunctionSubscriptiononCreatePositionauth0FunctionAppSyncFunction7FCE8613",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreatePositionpostAuth0FunctionSubscriptiononCreatePositionpostAuth0FunctionAppSyncFunction7575C0E5",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreatePositionDataResolverFnSubscriptionOnCreatePositionDataResolverFnAppSyncFunction0EA55EFB",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreatePosition\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/subscriptionOnCreatePositionResolver"
+   }
+  },
+  "SubscriptiononUpdatePositionauth0FunctionSubscriptiononUpdatePositionauth0FunctionAppSyncFunction373FC678": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdatePositionauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e6da5a6e993df8b5fdc91086b71eb53e72a3a97c98836ef9c9257776f36c452b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/SubscriptiononUpdatePositionauth0Function/SubscriptiononUpdatePositionauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdatePositionpostAuth0FunctionSubscriptiononUpdatePositionpostAuth0FunctionAppSyncFunction88F8F923": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdatePositionpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/SubscriptiononUpdatePositionpostAuth0Function/SubscriptiononUpdatePositionpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdatePositionDataResolverFnSubscriptionOnUpdatePositionDataResolverFnAppSyncFunction8BE26EC0": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdatePositionDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/SubscriptionOnUpdatePositionDataResolverFn/SubscriptionOnUpdatePositionDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdatePositionResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "onUpdatePosition",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdatePositionauth0FunctionSubscriptiononUpdatePositionauth0FunctionAppSyncFunction373FC678",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdatePositionpostAuth0FunctionSubscriptiononUpdatePositionpostAuth0FunctionAppSyncFunction88F8F923",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdatePositionDataResolverFnSubscriptionOnUpdatePositionDataResolverFnAppSyncFunction8BE26EC0",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdatePosition\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/subscriptionOnUpdatePositionResolver"
+   }
+  },
+  "SubscriptiononDeletePositionauth0FunctionSubscriptiononDeletePositionauth0FunctionAppSyncFunctionCF5E638F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeletePositionauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e6da5a6e993df8b5fdc91086b71eb53e72a3a97c98836ef9c9257776f36c452b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/SubscriptiononDeletePositionauth0Function/SubscriptiononDeletePositionauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeletePositionpostAuth0FunctionSubscriptiononDeletePositionpostAuth0FunctionAppSyncFunctionC343877D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeletePositionpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/SubscriptiononDeletePositionpostAuth0Function/SubscriptiononDeletePositionpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeletePositionDataResolverFnSubscriptionOnDeletePositionDataResolverFnAppSyncFunction5B114782": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeletePositionDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/SubscriptionOnDeletePositionDataResolverFn/SubscriptionOnDeletePositionDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeletePositionResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "onDeletePosition",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeletePositionauth0FunctionSubscriptiononDeletePositionauth0FunctionAppSyncFunctionCF5E638F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeletePositionpostAuth0FunctionSubscriptiononDeletePositionpostAuth0FunctionAppSyncFunctionC343877D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeletePositionDataResolverFnSubscriptionOnDeletePositionDataResolverFnAppSyncFunction5B114782",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeletePosition\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/subscriptionOnDeletePositionResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WOwW6DMAyGn6X34FF66XUF7dhNsHtlEoNSQoJip1WFePcJOnXa6fcnf7L/AvbHHPId3jnTZsicbWE+EwuZRlAPquz8F0YcSSiuUAZvrNjgVU0cUtSkysQSxj/s/GvGO19m8/A4BtPCN7aOTsikLI4w18E97eBoUThN/PAa5mrTq7ZCweZ18j99JK/XEmXwne1TxK3R72d3o7goPlyQmYThfQ3FBzglPZCsBZbV/UwyJVHbuhHsre8X5YMhuPLbrchhf4Rid2Vrs5i82JGgfuYPCHfK9jYBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/Position/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttPositionTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "PositionTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "GetAtt:PositionTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttPositionTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "Position-",
+      {
+       "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "GetAtt:PositionTable:Name"
+      ]
+     ]
+    }
+   }
+  },
+  "amplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionPositionDataSource6566F972Name": {
+   "Value": {
+    "Fn::GetAtt": [
+     "PositionDataSource",
+     "Name"
+    ]
+   }
+  },
+  "amplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionPositionTableDA9162FCTableArn": {
+   "Value": {
+    "Fn::GetAtt": [
+     "PositionTable",
+     "TableArn"
+    ]
+   }
+  }
+ }
+}

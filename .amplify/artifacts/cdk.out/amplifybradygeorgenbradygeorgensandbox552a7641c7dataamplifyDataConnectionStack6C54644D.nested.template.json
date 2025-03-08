@@ -1,0 +1,2931 @@
+{
+ "Resources": {
+  "Summaryresumesauth0FunctionSummaryresumesauth0FunctionAppSyncFunction75D7D55B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Summaryresumesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Summaryresumesauth0Function/Summaryresumesauth0Function.AppSyncFunction"
+   }
+  },
+  "SummaryResumesDataResolverFnSummaryResumesDataResolverFnAppSyncFunctionA3981E3E": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeDataSource7AD27433Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SummaryResumesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/645b610adc973f4512d49d415237921f83ed66a1c49e605f37f7ae30f18a0d68.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/SummaryResumesDataResolverFn/SummaryResumesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SummaryresumesResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "resumes",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Summaryresumesauth0FunctionSummaryresumesauth0FunctionAppSyncFunction75D7D55B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SummaryResumesDataResolverFnSummaryResumesDataResolverFnAppSyncFunctionA3981E3E",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Summary\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"resumes\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeTable2F41E87DTableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Summary"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/summaryResumesResolver"
+   }
+  },
+  "ContactInformationreferencesauth0FunctionContactInformationreferencesauth0FunctionAppSyncFunctionABF1F3F8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ContactInformationreferencesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ContactInformationreferencesauth0Function/ContactInformationreferencesauth0Function.AppSyncFunction"
+   }
+  },
+  "ContactInformationReferencesDataResolverFnContactInformationReferencesDataResolverFnAppSyncFunctionEDE76FCC": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataReferenceNestedStackReferenceNestedStackResourceB337EE3DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataReferenceReferenceDataSource024C835AName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ContactInformationReferencesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/71ffd1fc0abf8b472d8c5953368fe6f295ab8faa0f7ecce80ef101dbb20e2621.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ContactInformationReferencesDataResolverFn/ContactInformationReferencesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ContactInformationreferencesResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "references",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "ContactInformationreferencesauth0FunctionContactInformationreferencesauth0FunctionAppSyncFunctionABF1F3F8",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ContactInformationReferencesDataResolverFnContactInformationReferencesDataResolverFnAppSyncFunctionEDE76FCC",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"ContactInformation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"references\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataReferenceNestedStackReferenceNestedStackResourceB337EE3DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataReferenceReferenceTable1C6547B6TableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "ContactInformation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/contactInformationReferencesResolver"
+   }
+  },
+  "ContactInformationresumesauth0FunctionContactInformationresumesauth0FunctionAppSyncFunctionEBF0EB9D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ContactInformationresumesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ContactInformationresumesauth0Function/ContactInformationresumesauth0Function.AppSyncFunction"
+   }
+  },
+  "ContactInformationResumesDataResolverFnContactInformationResumesDataResolverFnAppSyncFunction666445CC": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeDataSource7AD27433Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ContactInformationResumesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/aed6b1e6c7d8c88e3bf10c0d370447e8ce2b5c7b861d2fc0318cc24f320e0d4c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ContactInformationResumesDataResolverFn/ContactInformationResumesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ContactInformationresumesResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "resumes",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "ContactInformationresumesauth0FunctionContactInformationresumesauth0FunctionAppSyncFunctionEBF0EB9D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ContactInformationResumesDataResolverFnContactInformationResumesDataResolverFnAppSyncFunction666445CC",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"ContactInformation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"resumes\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeTable2F41E87DTableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "ContactInformation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/contactInformationResumesResolver"
+   }
+  },
+  "Educationschoolsauth0FunctionEducationschoolsauth0FunctionAppSyncFunctionF1A83815": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Educationschoolsauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Educationschoolsauth0Function/Educationschoolsauth0Function.AppSyncFunction"
+   }
+  },
+  "EducationSchoolsDataResolverFnEducationSchoolsDataResolverFnAppSyncFunction1C96D47C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolNestedStackSchoolNestedStackResource4EC19830Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolSchoolDataSource7917BDA7Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "EducationSchoolsDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c695e25b8204c61fcef562919394cf2e2874ea3f25ae2e1aaaafa45d339c1e3f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/EducationSchoolsDataResolverFn/EducationSchoolsDataResolverFn.AppSyncFunction"
+   }
+  },
+  "EducationschoolsResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "schools",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Educationschoolsauth0FunctionEducationschoolsauth0FunctionAppSyncFunctionF1A83815",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "EducationSchoolsDataResolverFnEducationSchoolsDataResolverFnAppSyncFunction1C96D47C",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Education\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"schools\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolNestedStackSchoolNestedStackResource4EC19830Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolSchoolTable7703DCF7TableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Education"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/educationSchoolsResolver"
+   }
+  },
+  "Educationresumesauth0FunctionEducationresumesauth0FunctionAppSyncFunction3A32876B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Educationresumesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Educationresumesauth0Function/Educationresumesauth0Function.AppSyncFunction"
+   }
+  },
+  "EducationResumesDataResolverFnEducationResumesDataResolverFnAppSyncFunction7F1235DD": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeDataSource7AD27433Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "EducationResumesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/baeceb63516e510c55dcdc3756273e2fbd1637de74f4a8dba2af4013bed201c1.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/EducationResumesDataResolverFn/EducationResumesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "EducationresumesResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "resumes",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Educationresumesauth0FunctionEducationresumesauth0FunctionAppSyncFunction3A32876B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "EducationResumesDataResolverFnEducationResumesDataResolverFnAppSyncFunction7F1235DD",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Education\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"resumes\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeTable2F41E87DTableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Education"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/educationResumesResolver"
+   }
+  },
+  "Schooldegreesauth0FunctionSchooldegreesauth0FunctionAppSyncFunction09EB29EE": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Schooldegreesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Schooldegreesauth0Function/Schooldegreesauth0Function.AppSyncFunction"
+   }
+  },
+  "SchoolDegreesDataResolverFnSchoolDegreesDataResolverFnAppSyncFunction778C4B27": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataDegreeNestedStackDegreeNestedStackResource0819903DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataDegreeDegreeDataSource4053E46BName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SchoolDegreesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/35d27a1f3bf27bc58824ff00dd16b0561d6ab3afc9fa585a931d2cdb07dabd04.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/SchoolDegreesDataResolverFn/SchoolDegreesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SchooldegreesResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "degrees",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Schooldegreesauth0FunctionSchooldegreesauth0FunctionAppSyncFunction09EB29EE",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SchoolDegreesDataResolverFnSchoolDegreesDataResolverFnAppSyncFunction778C4B27",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"School\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"degrees\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataDegreeNestedStackDegreeNestedStackResource0819903DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataDegreeDegreeTableB5A06E30TableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "School"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/schoolDegreesResolver"
+   }
+  },
+  "Experiencepositionsauth0FunctionExperiencepositionsauth0FunctionAppSyncFunctionEAF82EB9": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Experiencepositionsauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Experiencepositionsauth0Function/Experiencepositionsauth0Function.AppSyncFunction"
+   }
+  },
+  "ExperiencePositionsDataResolverFnExperiencePositionsDataResolverFnAppSyncFunctionD2210762": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionNestedStackPositionNestedStackResource6487B264Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionPositionDataSource6566F972Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ExperiencePositionsDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/36f2c492cabbc3ec90f361d4bff52319d7a8a50eb729320b62edc024248ab7aa.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ExperiencePositionsDataResolverFn/ExperiencePositionsDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ExperiencepositionsResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "positions",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Experiencepositionsauth0FunctionExperiencepositionsauth0FunctionAppSyncFunctionEAF82EB9",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ExperiencePositionsDataResolverFnExperiencePositionsDataResolverFnAppSyncFunctionD2210762",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Experience\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"positions\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionNestedStackPositionNestedStackResource6487B264Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionPositionTableDA9162FCTableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Experience"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/experiencePositionsResolver"
+   }
+  },
+  "Experienceresumesauth0FunctionExperienceresumesauth0FunctionAppSyncFunction2BF08560": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Experienceresumesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Experienceresumesauth0Function/Experienceresumesauth0Function.AppSyncFunction"
+   }
+  },
+  "ExperienceResumesDataResolverFnExperienceResumesDataResolverFnAppSyncFunctionA4F5EFE6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeDataSource7AD27433Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ExperienceResumesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d4fa7a34ad85ef78cf86cf21bb9399f2af9d8c43d2a7d78d306b5189f3707902.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ExperienceResumesDataResolverFn/ExperienceResumesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ExperienceresumesResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "resumes",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Experienceresumesauth0FunctionExperienceresumesauth0FunctionAppSyncFunction2BF08560",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ExperienceResumesDataResolverFnExperienceResumesDataResolverFnAppSyncFunctionA4F5EFE6",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Experience\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"resumes\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeTable2F41E87DTableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Experience"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/experienceResumesResolver"
+   }
+  },
+  "Resumeskillsauth0FunctionResumeskillsauth0FunctionAppSyncFunction5F3A57E9": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Resumeskillsauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Resumeskillsauth0Function/Resumeskillsauth0Function.AppSyncFunction"
+   }
+  },
+  "ResumeSkillsDataResolverFnResumeSkillsDataResolverFnAppSyncFunction945EEA75": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSkillNestedStackSkillNestedStackResource62B9BD5EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSkillSkillDataSourceDF0AF158Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ResumeSkillsDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a5a0b554e79db2a9ab38780a7dd5a4c68da1f68df72b19d2aa03c5a68cae13c0.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ResumeSkillsDataResolverFn/ResumeSkillsDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ResumeskillsResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "skills",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Resumeskillsauth0FunctionResumeskillsauth0FunctionAppSyncFunction5F3A57E9",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ResumeSkillsDataResolverFnResumeSkillsDataResolverFnAppSyncFunction945EEA75",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Resume\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"skills\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSkillNestedStackSkillNestedStackResource62B9BD5EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSkillSkillTable34C1549BTableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Resume"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/resumeSkillsResolver"
+   }
+  },
+  "ReferencecontactInformationauth0FunctionReferencecontactInformationauth0FunctionAppSyncFunction370AAFE4": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ReferencecontactInformationauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ReferencecontactInformationauth0Function/ReferencecontactInformationauth0Function.AppSyncFunction"
+   }
+  },
+  "ReferenceContactInformationDataResolverFnReferenceContactInformationDataResolverFnAppSyncFunctionFF7C436C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationNestedStackContactInformationNestedStackResourceD310E75AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationContD16784E1"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ReferenceContactInformationDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/5371f7fcf124de436f4465a7a2a563f4a537e1ee453b47d6c7988b4b378034e1.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ReferenceContactInformationDataResolverFn/ReferenceContactInformationDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ReferencecontactInformationResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "contactInformation",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "ReferencecontactInformationauth0FunctionReferencecontactInformationauth0FunctionAppSyncFunction370AAFE4",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ReferenceContactInformationDataResolverFnReferenceContactInformationDataResolverFnAppSyncFunctionFF7C436C",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Reference\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"contactInformation\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationNestedStackContactInformationNestedStackResourceD310E75AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationContB37D6D2B"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Reference"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/referenceContactInformationResolver"
+   }
+  },
+  "Schooleducationauth0FunctionSchooleducationauth0FunctionAppSyncFunctionD2DFAE69": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Schooleducationauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Schooleducationauth0Function/Schooleducationauth0Function.AppSyncFunction"
+   }
+  },
+  "SchoolEducationDataResolverFnSchoolEducationDataResolverFnAppSyncFunction50BDAE80": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationNestedStackEducationNestedStackResource7ADD776DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationEducationDataSource5E418247Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SchoolEducationDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/2a34909717d5edff293ec851e68440e97b4a93b92780dbd27449401f7b0e172b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/SchoolEducationDataResolverFn/SchoolEducationDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SchooleducationResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "education",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Schooleducationauth0FunctionSchooleducationauth0FunctionAppSyncFunctionD2DFAE69",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SchoolEducationDataResolverFnSchoolEducationDataResolverFnAppSyncFunction50BDAE80",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"School\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"education\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationNestedStackEducationNestedStackResource7ADD776DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationEducationTable074894A4TableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "School"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/schoolEducationResolver"
+   }
+  },
+  "Degreeschoolauth0FunctionDegreeschoolauth0FunctionAppSyncFunctionF49FEF9D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Degreeschoolauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Degreeschoolauth0Function/Degreeschoolauth0Function.AppSyncFunction"
+   }
+  },
+  "DegreeSchoolDataResolverFnDegreeSchoolDataResolverFnAppSyncFunction47914A71": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolNestedStackSchoolNestedStackResource4EC19830Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolSchoolDataSource7917BDA7Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "DegreeSchoolDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/aeeb7d042eb8d761f75f6af00a653d45982855501c4d889b73b5def587befc78.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/DegreeSchoolDataResolverFn/DegreeSchoolDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DegreeschoolResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "school",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Degreeschoolauth0FunctionDegreeschoolauth0FunctionAppSyncFunctionF49FEF9D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "DegreeSchoolDataResolverFnDegreeSchoolDataResolverFnAppSyncFunction47914A71",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Degree\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"school\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolNestedStackSchoolNestedStackResource4EC19830Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolSchoolTable7703DCF7TableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Degree"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/degreeSchoolResolver"
+   }
+  },
+  "Positionexperienceauth0FunctionPositionexperienceauth0FunctionAppSyncFunctionF3878B87": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Positionexperienceauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Positionexperienceauth0Function/Positionexperienceauth0Function.AppSyncFunction"
+   }
+  },
+  "PositionExperienceDataResolverFnPositionExperienceDataResolverFnAppSyncFunction02C2E559": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceNestedStackExperienceNestedStackResourceC8A35AF8Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceExperienceDataSourceD860B5CDName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "PositionExperienceDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/10fc29085cec8ddcff5b435b58dc8a71fb723f7f9c714209bb654179f2bede22.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/PositionExperienceDataResolverFn/PositionExperienceDataResolverFn.AppSyncFunction"
+   }
+  },
+  "PositionexperienceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "experience",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Positionexperienceauth0FunctionPositionexperienceauth0FunctionAppSyncFunctionF3878B87",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "PositionExperienceDataResolverFnPositionExperienceDataResolverFnAppSyncFunction02C2E559",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Position\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"experience\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceNestedStackExperienceNestedStackResourceC8A35AF8Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceExperienceTableE0220B19TableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Position"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/positionExperienceResolver"
+   }
+  },
+  "Skillresumeauth0FunctionSkillresumeauth0FunctionAppSyncFunction5C230DE7": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Skillresumeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Skillresumeauth0Function/Skillresumeauth0Function.AppSyncFunction"
+   }
+  },
+  "SkillResumeDataResolverFnSkillResumeDataResolverFnAppSyncFunction39BF0EA8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeDataSource7AD27433Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SkillResumeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/55bea88b73585463e35bb5e4e4d0ae6625b5a102a4dcc47bf7857ecd65b036d3.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/SkillResumeDataResolverFn/SkillResumeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SkillresumeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "resume",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Skillresumeauth0FunctionSkillresumeauth0FunctionAppSyncFunction5C230DE7",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SkillResumeDataResolverFnSkillResumeDataResolverFnAppSyncFunction39BF0EA8",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Skill\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"resume\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeTable2F41E87DTableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Skill"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/skillResumeResolver"
+   }
+  },
+  "Resumesummaryauth0FunctionResumesummaryauth0FunctionAppSyncFunction7D392544": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Resumesummaryauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Resumesummaryauth0Function/Resumesummaryauth0Function.AppSyncFunction"
+   }
+  },
+  "ResumeSummaryDataResolverFnResumeSummaryDataResolverFnAppSyncFunction0F2E3BF5": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSummaryNestedStackSummaryNestedStackResource26B18401Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSummarySummaryDataSource5C1F6D3CName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ResumeSummaryDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c4af00c220c3324434a423d96be6f30d940d0e0211ea80ba1ede675c4d61bed4.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ResumeSummaryDataResolverFn/ResumeSummaryDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ResumesummaryResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "summary",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Resumesummaryauth0FunctionResumesummaryauth0FunctionAppSyncFunction7D392544",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ResumeSummaryDataResolverFnResumeSummaryDataResolverFnAppSyncFunction0F2E3BF5",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Resume\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"summary\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSummaryNestedStackSummaryNestedStackResource26B18401Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSummarySummaryTable9B288D2CTableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Resume"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/resumeSummaryResolver"
+   }
+  },
+  "ResumecontactInformationauth0FunctionResumecontactInformationauth0FunctionAppSyncFunction89FE5FA7": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ResumecontactInformationauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ResumecontactInformationauth0Function/ResumecontactInformationauth0Function.AppSyncFunction"
+   }
+  },
+  "ResumeContactInformationDataResolverFnResumeContactInformationDataResolverFnAppSyncFunctionFBED10B7": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationNestedStackContactInformationNestedStackResourceD310E75AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationContD16784E1"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ResumeContactInformationDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/5371f7fcf124de436f4465a7a2a563f4a537e1ee453b47d6c7988b4b378034e1.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ResumeContactInformationDataResolverFn/ResumeContactInformationDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ResumecontactInformationResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "contactInformation",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "ResumecontactInformationauth0FunctionResumecontactInformationauth0FunctionAppSyncFunction89FE5FA7",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ResumeContactInformationDataResolverFnResumeContactInformationDataResolverFnAppSyncFunctionFBED10B7",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Resume\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"contactInformation\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationNestedStackContactInformationNestedStackResourceD310E75AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationContB37D6D2B"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Resume"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/resumeContactInformationResolver"
+   }
+  },
+  "Resumeeducationauth0FunctionResumeeducationauth0FunctionAppSyncFunctionE238EB77": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Resumeeducationauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Resumeeducationauth0Function/Resumeeducationauth0Function.AppSyncFunction"
+   }
+  },
+  "ResumeEducationDataResolverFnResumeEducationDataResolverFnAppSyncFunction5F83671D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationNestedStackEducationNestedStackResource7ADD776DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationEducationDataSource5E418247Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ResumeEducationDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/2a34909717d5edff293ec851e68440e97b4a93b92780dbd27449401f7b0e172b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ResumeEducationDataResolverFn/ResumeEducationDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ResumeeducationResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "education",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Resumeeducationauth0FunctionResumeeducationauth0FunctionAppSyncFunctionE238EB77",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ResumeEducationDataResolverFnResumeEducationDataResolverFnAppSyncFunction5F83671D",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Resume\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"education\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationNestedStackEducationNestedStackResource7ADD776DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationEducationTable074894A4TableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Resume"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/resumeEducationResolver"
+   }
+  },
+  "Resumeexperienceauth0FunctionResumeexperienceauth0FunctionAppSyncFunctionF9FB3CE9": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "Resumeexperienceauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/98d57dc1efb9e47547e4d43b376202499240f34e43676c88c84fab62008b2bf5.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/Resumeexperienceauth0Function/Resumeexperienceauth0Function.AppSyncFunction"
+   }
+  },
+  "ResumeExperienceDataResolverFnResumeExperienceDataResolverFnAppSyncFunction261B78D8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceNestedStackExperienceNestedStackResourceC8A35AF8Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceExperienceDataSourceD860B5CDName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "ResumeExperienceDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/10fc29085cec8ddcff5b435b58dc8a71fb723f7f9c714209bb654179f2bede22.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/ResumeExperienceDataResolverFn/ResumeExperienceDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ResumeexperienceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+    },
+    "FieldName": "experience",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "Resumeexperienceauth0FunctionResumeexperienceauth0FunctionAppSyncFunctionF9FB3CE9",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "ResumeExperienceDataResolverFnResumeExperienceDataResolverFnAppSyncFunction261B78D8",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Resume\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"experience\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceNestedStackExperienceNestedStackResourceC8A35AF8Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceExperienceTableE0220B19TableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Resume"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/resumeExperienceResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/yXMPQ6DMAxA4bOwB5efhbUgdewAB0BuMChAHYQdUIW4e0U7fXrLyyAtEkgi3CW23RTP7gXHk0SpaxTtZHCX9pC8RRFSgfuFkRzKYCfSEoUMLot82MJR9fwIbNV5rjz3bggrXmGqnmsSP2+0nqf5PRrFwfFwGvYdwSi3LUsgLSCLRnEuXgOrexPUf79X6XqHpwAAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-bradygeorgen-bradygeorgen-sandbox-552a7641c7/data/amplifyData/ConnectionStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPI52CB0F27ApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataGraphQLAPINONEDS21B4A103Name": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeDataSource7AD27433Name": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeNestedStackResumeNestedStackResourceC067195EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataResumeResumeTable2F41E87DTableArn": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthauthenticatedUserRole089B8081Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthunauthenticatedUserRoleD42C34DFRef": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7authNestedStackauthNestedStackResource816B737AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7authamplifyAuthIdentityPoolA3C117FBRef": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataReferenceNestedStackReferenceNestedStackResourceB337EE3DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataReferenceReferenceDataSource024C835AName": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataReferenceNestedStackReferenceNestedStackResourceB337EE3DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataReferenceReferenceTable1C6547B6TableArn": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolNestedStackSchoolNestedStackResource4EC19830Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolSchoolDataSource7917BDA7Name": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolNestedStackSchoolNestedStackResource4EC19830Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSchoolSchoolTable7703DCF7TableArn": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataDegreeNestedStackDegreeNestedStackResource0819903DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataDegreeDegreeDataSource4053E46BName": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataDegreeNestedStackDegreeNestedStackResource0819903DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataDegreeDegreeTableB5A06E30TableArn": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionNestedStackPositionNestedStackResource6487B264Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionPositionDataSource6566F972Name": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionNestedStackPositionNestedStackResource6487B264Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataPositionPositionTableDA9162FCTableArn": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSkillNestedStackSkillNestedStackResource62B9BD5EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSkillSkillDataSourceDF0AF158Name": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSkillNestedStackSkillNestedStackResource62B9BD5EOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSkillSkillTable34C1549BTableArn": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationNestedStackContactInformationNestedStackResourceD310E75AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationContD16784E1": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationNestedStackContactInformationNestedStackResourceD310E75AOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataContactInformationContB37D6D2B": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationNestedStackEducationNestedStackResource7ADD776DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationEducationDataSource5E418247Name": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationNestedStackEducationNestedStackResource7ADD776DOutputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataEducationEducationTable074894A4TableArn": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceNestedStackExperienceNestedStackResourceC8A35AF8Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceExperienceDataSourceD860B5CDName": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceNestedStackExperienceNestedStackResourceC8A35AF8Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataExperienceExperienceTableE0220B19TableArn": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSummaryNestedStackSummaryNestedStackResource26B18401Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSummarySummaryDataSource5C1F6D3CName": {
+   "Type": "String"
+  },
+  "referencetoamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSummaryNestedStackSummaryNestedStackResource26B18401Outputsamplifybradygeorgenbradygeorgensandbox552a7641c7dataamplifyDataSummarySummaryTable9B288D2CTableArn": {
+   "Type": "String"
+  }
+ }
+}

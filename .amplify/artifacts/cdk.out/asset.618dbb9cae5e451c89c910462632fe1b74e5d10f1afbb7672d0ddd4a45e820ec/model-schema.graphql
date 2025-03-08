@@ -1,0 +1,102 @@
+type Summary @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  goals: String
+  persona: String
+  url: String
+  headshot: String
+  gptResponse: String
+  resume: String
+  resumes: [Resume] @hasMany(references: ["summaryId"])
+}
+
+type ContactInformation @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  name: String
+  email: String
+  phone: String
+  resume: String
+  references: [Reference] @hasMany(references: ["contactInformationId"])
+  resumes: [Resume] @hasMany(references: ["contactInformationId"])
+}
+
+type Reference @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  name: String
+  phone: String
+  email: String
+  contactInformationId: String
+  contactInformation: ContactInformation @belongsTo(references: ["contactInformationId"])
+}
+
+type Education @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  summary: String
+  resume: String
+  schools: [School] @hasMany(references: ["educationId"])
+  resumes: [Resume] @hasMany(references: ["educationId"])
+}
+
+type School @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  name: String
+  educationId: String
+  education: Education @belongsTo(references: ["educationId"])
+  degrees: [Degree] @hasMany(references: ["schoolId"])
+}
+
+type Degree @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  major: String
+  startYear: String
+  endYear: String
+  schoolId: String
+  school: School @belongsTo(references: ["schoolId"])
+}
+
+type Experience @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  positions: [Position] @hasMany(references: ["experienceId"])
+  resumes: [Resume] @hasMany(references: ["experienceId"])
+}
+
+type Position @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  title: String
+  company: String
+  startDate: String
+  endDate: String
+  experienceId: String
+  experience: Experience @belongsTo(references: ["experienceId"])
+}
+
+type Skill @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  title: String
+  link: String
+  resumeId: String
+  resume: Resume @belongsTo(references: ["resumeId"])
+}
+
+type Resume @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  id: ID! @primaryKey
+  title: String
+  summaryId: String
+  summary: Summary @belongsTo(references: ["summaryId"])
+  contactInformationId: String
+  contactInformation: ContactInformation @belongsTo(references: ["contactInformationId"])
+  educationId: String
+  education: Education @belongsTo(references: ["educationId"])
+  experienceId: String
+  experience: Experience @belongsTo(references: ["experienceId"])
+  skills: [Skill] @hasMany(references: ["resumeId"])
+}
