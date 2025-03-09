@@ -1,0 +1,951 @@
+type Summary @aws_iam @aws_api_key {
+  id: ID!
+  goals: String
+  persona: String
+  url: String
+  headshot: String
+  gptResponse: String
+  resume: String
+  resumes(filter: ModelResumeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelResumeConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type ContactInformation @aws_iam @aws_api_key {
+  id: ID!
+  name: String
+  email: String
+  phone: String
+  resume: String
+  references(filter: ModelReferenceFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReferenceConnection
+  resumes(filter: ModelResumeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelResumeConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Reference @aws_iam @aws_api_key {
+  id: ID!
+  name: String
+  phone: String
+  email: String
+  contactInformationId: String
+  contactInformation: ContactInformation
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Education @aws_iam @aws_api_key {
+  id: ID!
+  summary: String
+  resume: String
+  schools(filter: ModelSchoolFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelSchoolConnection
+  resumes(filter: ModelResumeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelResumeConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type School @aws_iam @aws_api_key {
+  id: ID!
+  name: String
+  educationId: String
+  education: Education
+  degrees(filter: ModelDegreeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelDegreeConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Degree @aws_iam @aws_api_key {
+  id: ID!
+  major: String
+  startYear: String
+  endYear: String
+  schoolId: String
+  school: School
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Experience @aws_iam @aws_api_key {
+  id: ID!
+  positions(filter: ModelPositionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPositionConnection
+  resumes(filter: ModelResumeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelResumeConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Position @aws_iam @aws_api_key {
+  id: ID!
+  title: String
+  company: String
+  startDate: String
+  endDate: String
+  experienceId: String
+  experience: Experience
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Skill @aws_iam @aws_api_key {
+  id: ID!
+  title: String
+  link: String
+  resumeId: String
+  resume: Resume
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Resume @aws_iam @aws_api_key {
+  id: ID!
+  title: String
+  summaryId: String
+  summary: Summary
+  contactInformationId: String
+  contactInformation: ContactInformation
+  educationId: String
+  education: Education
+  experienceId: String
+  experience: Experience
+  skills(filter: ModelSkillFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelSkillConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+input AmplifyAIConversationTurnErrorInput {
+  errorType: String!
+  message: String!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelSummaryConnection @aws_api_key @aws_iam {
+  items: [Summary]!
+  nextToken: String
+}
+
+input ModelSummaryFilterInput {
+  id: ModelIDInput
+  goals: ModelStringInput
+  persona: ModelStringInput
+  url: ModelStringInput
+  headshot: ModelStringInput
+  gptResponse: ModelStringInput
+  resume: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelSummaryFilterInput]
+  or: [ModelSummaryFilterInput]
+  not: ModelSummaryFilterInput
+}
+
+type Query {
+  getSummary(id: ID!): Summary @aws_api_key @aws_iam
+  listSummaries(id: ID, filter: ModelSummaryFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelSummaryConnection @aws_api_key @aws_iam
+  getContactInformation(id: ID!): ContactInformation @aws_api_key @aws_iam
+  listContactInformations(id: ID, filter: ModelContactInformationFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelContactInformationConnection @aws_api_key @aws_iam
+  getReference(id: ID!): Reference @aws_api_key @aws_iam
+  listReferences(id: ID, filter: ModelReferenceFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelReferenceConnection @aws_api_key @aws_iam
+  getEducation(id: ID!): Education @aws_api_key @aws_iam
+  listEducations(id: ID, filter: ModelEducationFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelEducationConnection @aws_api_key @aws_iam
+  getSchool(id: ID!): School @aws_api_key @aws_iam
+  listSchools(id: ID, filter: ModelSchoolFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelSchoolConnection @aws_api_key @aws_iam
+  getDegree(id: ID!): Degree @aws_api_key @aws_iam
+  listDegrees(id: ID, filter: ModelDegreeFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelDegreeConnection @aws_api_key @aws_iam
+  getExperience(id: ID!): Experience @aws_api_key @aws_iam
+  listExperiences(id: ID, filter: ModelExperienceFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelExperienceConnection @aws_api_key @aws_iam
+  getPosition(id: ID!): Position @aws_api_key @aws_iam
+  listPositions(id: ID, filter: ModelPositionFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelPositionConnection @aws_api_key @aws_iam
+  getSkill(id: ID!): Skill @aws_api_key @aws_iam
+  listSkills(id: ID, filter: ModelSkillFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelSkillConnection @aws_api_key @aws_iam
+  getResume(id: ID!): Resume @aws_api_key @aws_iam
+  listResumes(id: ID, filter: ModelResumeFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelResumeConnection @aws_api_key @aws_iam
+}
+
+input ModelSummaryConditionInput {
+  goals: ModelStringInput
+  persona: ModelStringInput
+  url: ModelStringInput
+  headshot: ModelStringInput
+  gptResponse: ModelStringInput
+  resume: ModelStringInput
+  and: [ModelSummaryConditionInput]
+  or: [ModelSummaryConditionInput]
+  not: ModelSummaryConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateSummaryInput {
+  id: ID
+  goals: String
+  persona: String
+  url: String
+  headshot: String
+  gptResponse: String
+  resume: String
+}
+
+input UpdateSummaryInput {
+  id: ID!
+  goals: String
+  persona: String
+  url: String
+  headshot: String
+  gptResponse: String
+  resume: String
+}
+
+input DeleteSummaryInput {
+  id: ID!
+}
+
+type Mutation {
+  createSummary(input: CreateSummaryInput!, condition: ModelSummaryConditionInput): Summary @aws_api_key @aws_iam
+  updateSummary(input: UpdateSummaryInput!, condition: ModelSummaryConditionInput): Summary @aws_api_key @aws_iam
+  deleteSummary(input: DeleteSummaryInput!, condition: ModelSummaryConditionInput): Summary @aws_api_key @aws_iam
+  createContactInformation(input: CreateContactInformationInput!, condition: ModelContactInformationConditionInput): ContactInformation @aws_api_key @aws_iam
+  updateContactInformation(input: UpdateContactInformationInput!, condition: ModelContactInformationConditionInput): ContactInformation @aws_api_key @aws_iam
+  deleteContactInformation(input: DeleteContactInformationInput!, condition: ModelContactInformationConditionInput): ContactInformation @aws_api_key @aws_iam
+  createReference(input: CreateReferenceInput!, condition: ModelReferenceConditionInput): Reference @aws_api_key @aws_iam
+  updateReference(input: UpdateReferenceInput!, condition: ModelReferenceConditionInput): Reference @aws_api_key @aws_iam
+  deleteReference(input: DeleteReferenceInput!, condition: ModelReferenceConditionInput): Reference @aws_api_key @aws_iam
+  createEducation(input: CreateEducationInput!, condition: ModelEducationConditionInput): Education @aws_api_key @aws_iam
+  updateEducation(input: UpdateEducationInput!, condition: ModelEducationConditionInput): Education @aws_api_key @aws_iam
+  deleteEducation(input: DeleteEducationInput!, condition: ModelEducationConditionInput): Education @aws_api_key @aws_iam
+  createSchool(input: CreateSchoolInput!, condition: ModelSchoolConditionInput): School @aws_api_key @aws_iam
+  updateSchool(input: UpdateSchoolInput!, condition: ModelSchoolConditionInput): School @aws_api_key @aws_iam
+  deleteSchool(input: DeleteSchoolInput!, condition: ModelSchoolConditionInput): School @aws_api_key @aws_iam
+  createDegree(input: CreateDegreeInput!, condition: ModelDegreeConditionInput): Degree @aws_api_key @aws_iam
+  updateDegree(input: UpdateDegreeInput!, condition: ModelDegreeConditionInput): Degree @aws_api_key @aws_iam
+  deleteDegree(input: DeleteDegreeInput!, condition: ModelDegreeConditionInput): Degree @aws_api_key @aws_iam
+  createExperience(input: CreateExperienceInput!, condition: ModelExperienceConditionInput): Experience @aws_api_key @aws_iam
+  updateExperience(input: UpdateExperienceInput!, condition: ModelExperienceConditionInput): Experience @aws_api_key @aws_iam
+  deleteExperience(input: DeleteExperienceInput!, condition: ModelExperienceConditionInput): Experience @aws_api_key @aws_iam
+  createPosition(input: CreatePositionInput!, condition: ModelPositionConditionInput): Position @aws_api_key @aws_iam
+  updatePosition(input: UpdatePositionInput!, condition: ModelPositionConditionInput): Position @aws_api_key @aws_iam
+  deletePosition(input: DeletePositionInput!, condition: ModelPositionConditionInput): Position @aws_api_key @aws_iam
+  createSkill(input: CreateSkillInput!, condition: ModelSkillConditionInput): Skill @aws_api_key @aws_iam
+  updateSkill(input: UpdateSkillInput!, condition: ModelSkillConditionInput): Skill @aws_api_key @aws_iam
+  deleteSkill(input: DeleteSkillInput!, condition: ModelSkillConditionInput): Skill @aws_api_key @aws_iam
+  createResume(input: CreateResumeInput!, condition: ModelResumeConditionInput): Resume @aws_api_key @aws_iam
+  updateResume(input: UpdateResumeInput!, condition: ModelResumeConditionInput): Resume @aws_api_key @aws_iam
+  deleteResume(input: DeleteResumeInput!, condition: ModelResumeConditionInput): Resume @aws_api_key @aws_iam
+}
+
+input ModelSubscriptionSummaryFilterInput {
+  id: ModelSubscriptionIDInput
+  goals: ModelSubscriptionStringInput
+  persona: ModelSubscriptionStringInput
+  url: ModelSubscriptionStringInput
+  headshot: ModelSubscriptionStringInput
+  gptResponse: ModelSubscriptionStringInput
+  resume: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionSummaryFilterInput]
+  or: [ModelSubscriptionSummaryFilterInput]
+}
+
+type Subscription {
+  onCreateSummary(filter: ModelSubscriptionSummaryFilterInput): Summary @aws_subscribe(mutations: ["createSummary"]) @aws_api_key @aws_iam
+  onUpdateSummary(filter: ModelSubscriptionSummaryFilterInput): Summary @aws_subscribe(mutations: ["updateSummary"]) @aws_api_key @aws_iam
+  onDeleteSummary(filter: ModelSubscriptionSummaryFilterInput): Summary @aws_subscribe(mutations: ["deleteSummary"]) @aws_api_key @aws_iam
+  onCreateContactInformation(filter: ModelSubscriptionContactInformationFilterInput): ContactInformation @aws_subscribe(mutations: ["createContactInformation"]) @aws_api_key @aws_iam
+  onUpdateContactInformation(filter: ModelSubscriptionContactInformationFilterInput): ContactInformation @aws_subscribe(mutations: ["updateContactInformation"]) @aws_api_key @aws_iam
+  onDeleteContactInformation(filter: ModelSubscriptionContactInformationFilterInput): ContactInformation @aws_subscribe(mutations: ["deleteContactInformation"]) @aws_api_key @aws_iam
+  onCreateReference(filter: ModelSubscriptionReferenceFilterInput): Reference @aws_subscribe(mutations: ["createReference"]) @aws_api_key @aws_iam
+  onUpdateReference(filter: ModelSubscriptionReferenceFilterInput): Reference @aws_subscribe(mutations: ["updateReference"]) @aws_api_key @aws_iam
+  onDeleteReference(filter: ModelSubscriptionReferenceFilterInput): Reference @aws_subscribe(mutations: ["deleteReference"]) @aws_api_key @aws_iam
+  onCreateEducation(filter: ModelSubscriptionEducationFilterInput): Education @aws_subscribe(mutations: ["createEducation"]) @aws_api_key @aws_iam
+  onUpdateEducation(filter: ModelSubscriptionEducationFilterInput): Education @aws_subscribe(mutations: ["updateEducation"]) @aws_api_key @aws_iam
+  onDeleteEducation(filter: ModelSubscriptionEducationFilterInput): Education @aws_subscribe(mutations: ["deleteEducation"]) @aws_api_key @aws_iam
+  onCreateSchool(filter: ModelSubscriptionSchoolFilterInput): School @aws_subscribe(mutations: ["createSchool"]) @aws_api_key @aws_iam
+  onUpdateSchool(filter: ModelSubscriptionSchoolFilterInput): School @aws_subscribe(mutations: ["updateSchool"]) @aws_api_key @aws_iam
+  onDeleteSchool(filter: ModelSubscriptionSchoolFilterInput): School @aws_subscribe(mutations: ["deleteSchool"]) @aws_api_key @aws_iam
+  onCreateDegree(filter: ModelSubscriptionDegreeFilterInput): Degree @aws_subscribe(mutations: ["createDegree"]) @aws_api_key @aws_iam
+  onUpdateDegree(filter: ModelSubscriptionDegreeFilterInput): Degree @aws_subscribe(mutations: ["updateDegree"]) @aws_api_key @aws_iam
+  onDeleteDegree(filter: ModelSubscriptionDegreeFilterInput): Degree @aws_subscribe(mutations: ["deleteDegree"]) @aws_api_key @aws_iam
+  onCreateExperience(filter: ModelSubscriptionExperienceFilterInput): Experience @aws_subscribe(mutations: ["createExperience"]) @aws_api_key @aws_iam
+  onUpdateExperience(filter: ModelSubscriptionExperienceFilterInput): Experience @aws_subscribe(mutations: ["updateExperience"]) @aws_api_key @aws_iam
+  onDeleteExperience(filter: ModelSubscriptionExperienceFilterInput): Experience @aws_subscribe(mutations: ["deleteExperience"]) @aws_api_key @aws_iam
+  onCreatePosition(filter: ModelSubscriptionPositionFilterInput): Position @aws_subscribe(mutations: ["createPosition"]) @aws_api_key @aws_iam
+  onUpdatePosition(filter: ModelSubscriptionPositionFilterInput): Position @aws_subscribe(mutations: ["updatePosition"]) @aws_api_key @aws_iam
+  onDeletePosition(filter: ModelSubscriptionPositionFilterInput): Position @aws_subscribe(mutations: ["deletePosition"]) @aws_api_key @aws_iam
+  onCreateSkill(filter: ModelSubscriptionSkillFilterInput): Skill @aws_subscribe(mutations: ["createSkill"]) @aws_api_key @aws_iam
+  onUpdateSkill(filter: ModelSubscriptionSkillFilterInput): Skill @aws_subscribe(mutations: ["updateSkill"]) @aws_api_key @aws_iam
+  onDeleteSkill(filter: ModelSubscriptionSkillFilterInput): Skill @aws_subscribe(mutations: ["deleteSkill"]) @aws_api_key @aws_iam
+  onCreateResume(filter: ModelSubscriptionResumeFilterInput): Resume @aws_subscribe(mutations: ["createResume"]) @aws_api_key @aws_iam
+  onUpdateResume(filter: ModelSubscriptionResumeFilterInput): Resume @aws_subscribe(mutations: ["updateResume"]) @aws_api_key @aws_iam
+  onDeleteResume(filter: ModelSubscriptionResumeFilterInput): Resume @aws_subscribe(mutations: ["deleteResume"]) @aws_api_key @aws_iam
+}
+
+type ModelContactInformationConnection @aws_api_key @aws_iam {
+  items: [ContactInformation]!
+  nextToken: String
+}
+
+input ModelContactInformationFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  email: ModelStringInput
+  phone: ModelStringInput
+  resume: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelContactInformationFilterInput]
+  or: [ModelContactInformationFilterInput]
+  not: ModelContactInformationFilterInput
+}
+
+input ModelContactInformationConditionInput {
+  name: ModelStringInput
+  email: ModelStringInput
+  phone: ModelStringInput
+  resume: ModelStringInput
+  and: [ModelContactInformationConditionInput]
+  or: [ModelContactInformationConditionInput]
+  not: ModelContactInformationConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateContactInformationInput {
+  id: ID
+  name: String
+  email: String
+  phone: String
+  resume: String
+}
+
+input UpdateContactInformationInput {
+  id: ID!
+  name: String
+  email: String
+  phone: String
+  resume: String
+}
+
+input DeleteContactInformationInput {
+  id: ID!
+}
+
+input ModelSubscriptionContactInformationFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  email: ModelSubscriptionStringInput
+  phone: ModelSubscriptionStringInput
+  resume: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionContactInformationFilterInput]
+  or: [ModelSubscriptionContactInformationFilterInput]
+}
+
+type ModelReferenceConnection @aws_iam @aws_api_key {
+  items: [Reference]!
+  nextToken: String
+}
+
+input ModelReferenceFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  phone: ModelStringInput
+  email: ModelStringInput
+  contactInformationId: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelReferenceFilterInput]
+  or: [ModelReferenceFilterInput]
+  not: ModelReferenceFilterInput
+}
+
+input ModelReferenceConditionInput {
+  name: ModelStringInput
+  phone: ModelStringInput
+  email: ModelStringInput
+  contactInformationId: ModelStringInput
+  and: [ModelReferenceConditionInput]
+  or: [ModelReferenceConditionInput]
+  not: ModelReferenceConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateReferenceInput {
+  id: ID
+  name: String
+  phone: String
+  email: String
+  contactInformationId: String
+}
+
+input UpdateReferenceInput {
+  id: ID!
+  name: String
+  phone: String
+  email: String
+  contactInformationId: String
+}
+
+input DeleteReferenceInput {
+  id: ID!
+}
+
+input ModelSubscriptionReferenceFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  phone: ModelSubscriptionStringInput
+  email: ModelSubscriptionStringInput
+  contactInformationId: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionReferenceFilterInput]
+  or: [ModelSubscriptionReferenceFilterInput]
+}
+
+type ModelEducationConnection @aws_api_key @aws_iam {
+  items: [Education]!
+  nextToken: String
+}
+
+input ModelEducationFilterInput {
+  id: ModelIDInput
+  summary: ModelStringInput
+  resume: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelEducationFilterInput]
+  or: [ModelEducationFilterInput]
+  not: ModelEducationFilterInput
+}
+
+input ModelEducationConditionInput {
+  summary: ModelStringInput
+  resume: ModelStringInput
+  and: [ModelEducationConditionInput]
+  or: [ModelEducationConditionInput]
+  not: ModelEducationConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateEducationInput {
+  id: ID
+  summary: String
+  resume: String
+}
+
+input UpdateEducationInput {
+  id: ID!
+  summary: String
+  resume: String
+}
+
+input DeleteEducationInput {
+  id: ID!
+}
+
+input ModelSubscriptionEducationFilterInput {
+  id: ModelSubscriptionIDInput
+  summary: ModelSubscriptionStringInput
+  resume: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionEducationFilterInput]
+  or: [ModelSubscriptionEducationFilterInput]
+}
+
+type ModelSchoolConnection @aws_iam @aws_api_key {
+  items: [School]!
+  nextToken: String
+}
+
+input ModelSchoolFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  educationId: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelSchoolFilterInput]
+  or: [ModelSchoolFilterInput]
+  not: ModelSchoolFilterInput
+}
+
+input ModelSchoolConditionInput {
+  name: ModelStringInput
+  educationId: ModelStringInput
+  and: [ModelSchoolConditionInput]
+  or: [ModelSchoolConditionInput]
+  not: ModelSchoolConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateSchoolInput {
+  id: ID
+  name: String
+  educationId: String
+}
+
+input UpdateSchoolInput {
+  id: ID!
+  name: String
+  educationId: String
+}
+
+input DeleteSchoolInput {
+  id: ID!
+}
+
+input ModelSubscriptionSchoolFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  educationId: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionSchoolFilterInput]
+  or: [ModelSubscriptionSchoolFilterInput]
+}
+
+type ModelDegreeConnection @aws_iam @aws_api_key {
+  items: [Degree]!
+  nextToken: String
+}
+
+input ModelDegreeFilterInput {
+  id: ModelIDInput
+  major: ModelStringInput
+  startYear: ModelStringInput
+  endYear: ModelStringInput
+  schoolId: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelDegreeFilterInput]
+  or: [ModelDegreeFilterInput]
+  not: ModelDegreeFilterInput
+}
+
+input ModelDegreeConditionInput {
+  major: ModelStringInput
+  startYear: ModelStringInput
+  endYear: ModelStringInput
+  schoolId: ModelStringInput
+  and: [ModelDegreeConditionInput]
+  or: [ModelDegreeConditionInput]
+  not: ModelDegreeConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateDegreeInput {
+  id: ID
+  major: String
+  startYear: String
+  endYear: String
+  schoolId: String
+}
+
+input UpdateDegreeInput {
+  id: ID!
+  major: String
+  startYear: String
+  endYear: String
+  schoolId: String
+}
+
+input DeleteDegreeInput {
+  id: ID!
+}
+
+input ModelSubscriptionDegreeFilterInput {
+  id: ModelSubscriptionIDInput
+  major: ModelSubscriptionStringInput
+  startYear: ModelSubscriptionStringInput
+  endYear: ModelSubscriptionStringInput
+  schoolId: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionDegreeFilterInput]
+  or: [ModelSubscriptionDegreeFilterInput]
+}
+
+type ModelExperienceConnection @aws_api_key @aws_iam {
+  items: [Experience]!
+  nextToken: String
+}
+
+input ModelExperienceFilterInput {
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelExperienceFilterInput]
+  or: [ModelExperienceFilterInput]
+  not: ModelExperienceFilterInput
+}
+
+input ModelExperienceConditionInput {
+  and: [ModelExperienceConditionInput]
+  or: [ModelExperienceConditionInput]
+  not: ModelExperienceConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateExperienceInput {
+  id: ID
+}
+
+input UpdateExperienceInput {
+  id: ID!
+}
+
+input DeleteExperienceInput {
+  id: ID!
+}
+
+input ModelSubscriptionExperienceFilterInput {
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionExperienceFilterInput]
+  or: [ModelSubscriptionExperienceFilterInput]
+}
+
+type ModelPositionConnection @aws_iam @aws_api_key {
+  items: [Position]!
+  nextToken: String
+}
+
+input ModelPositionFilterInput {
+  id: ModelIDInput
+  title: ModelStringInput
+  company: ModelStringInput
+  startDate: ModelStringInput
+  endDate: ModelStringInput
+  experienceId: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelPositionFilterInput]
+  or: [ModelPositionFilterInput]
+  not: ModelPositionFilterInput
+}
+
+input ModelPositionConditionInput {
+  title: ModelStringInput
+  company: ModelStringInput
+  startDate: ModelStringInput
+  endDate: ModelStringInput
+  experienceId: ModelStringInput
+  and: [ModelPositionConditionInput]
+  or: [ModelPositionConditionInput]
+  not: ModelPositionConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreatePositionInput {
+  id: ID
+  title: String
+  company: String
+  startDate: String
+  endDate: String
+  experienceId: String
+}
+
+input UpdatePositionInput {
+  id: ID!
+  title: String
+  company: String
+  startDate: String
+  endDate: String
+  experienceId: String
+}
+
+input DeletePositionInput {
+  id: ID!
+}
+
+input ModelSubscriptionPositionFilterInput {
+  id: ModelSubscriptionIDInput
+  title: ModelSubscriptionStringInput
+  company: ModelSubscriptionStringInput
+  startDate: ModelSubscriptionStringInput
+  endDate: ModelSubscriptionStringInput
+  experienceId: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionPositionFilterInput]
+  or: [ModelSubscriptionPositionFilterInput]
+}
+
+type ModelSkillConnection @aws_api_key @aws_iam {
+  items: [Skill]!
+  nextToken: String
+}
+
+input ModelSkillFilterInput {
+  id: ModelIDInput
+  title: ModelStringInput
+  link: ModelStringInput
+  resumeId: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelSkillFilterInput]
+  or: [ModelSkillFilterInput]
+  not: ModelSkillFilterInput
+}
+
+input ModelSkillConditionInput {
+  title: ModelStringInput
+  link: ModelStringInput
+  resumeId: ModelStringInput
+  and: [ModelSkillConditionInput]
+  or: [ModelSkillConditionInput]
+  not: ModelSkillConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateSkillInput {
+  id: ID
+  title: String
+  link: String
+  resumeId: String
+}
+
+input UpdateSkillInput {
+  id: ID!
+  title: String
+  link: String
+  resumeId: String
+}
+
+input DeleteSkillInput {
+  id: ID!
+}
+
+input ModelSubscriptionSkillFilterInput {
+  id: ModelSubscriptionIDInput
+  title: ModelSubscriptionStringInput
+  link: ModelSubscriptionStringInput
+  resumeId: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionSkillFilterInput]
+  or: [ModelSubscriptionSkillFilterInput]
+}
+
+type ModelResumeConnection @aws_iam @aws_api_key {
+  items: [Resume]!
+  nextToken: String
+}
+
+input ModelResumeFilterInput {
+  id: ModelIDInput
+  title: ModelStringInput
+  summaryId: ModelStringInput
+  contactInformationId: ModelStringInput
+  educationId: ModelStringInput
+  experienceId: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelResumeFilterInput]
+  or: [ModelResumeFilterInput]
+  not: ModelResumeFilterInput
+}
+
+input ModelResumeConditionInput {
+  title: ModelStringInput
+  summaryId: ModelStringInput
+  contactInformationId: ModelStringInput
+  educationId: ModelStringInput
+  experienceId: ModelStringInput
+  and: [ModelResumeConditionInput]
+  or: [ModelResumeConditionInput]
+  not: ModelResumeConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateResumeInput {
+  id: ID
+  title: String
+  summaryId: String
+  contactInformationId: String
+  educationId: String
+  experienceId: String
+}
+
+input UpdateResumeInput {
+  id: ID!
+  title: String
+  summaryId: String
+  contactInformationId: String
+  educationId: String
+  experienceId: String
+}
+
+input DeleteResumeInput {
+  id: ID!
+}
+
+input ModelSubscriptionResumeFilterInput {
+  id: ModelSubscriptionIDInput
+  title: ModelSubscriptionStringInput
+  summaryId: ModelSubscriptionStringInput
+  contactInformationId: ModelSubscriptionStringInput
+  educationId: ModelSubscriptionStringInput
+  experienceId: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionResumeFilterInput]
+  or: [ModelSubscriptionResumeFilterInput]
+}

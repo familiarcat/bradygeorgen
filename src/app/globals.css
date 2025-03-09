@@ -1,0 +1,28 @@
+/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+}
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: #111;
+  margin: 0;
+  padding: 0;
+}
+
+/* ReactFlow Styles (if needed) */
+.react-flow__node { @apply transition-transform duration-200; }
+.react-flow__node:hover { transform: scale(1.05); }
+.react-flow__edge { stroke: #9CA3AF; }
+.react-flow__edge.animated { stroke-dasharray: 5; animation: dashdraw 0.5s linear infinite; }
+@keyframes dashdraw { from { stroke-dashoffset: 10; } to { stroke-dashoffset: 0; } }
+
+/* ReactFlow Styles */
+.react-flow__node { @apply transition-transform duration-200; }
+.react-flow__node:hover { transform: scale(1.05); }
+.react-flow__edge { stroke: #9CA3AF; }
+.react-flow__edge.animated { stroke-dasharray: 5; animation: dashdraw 0.5s linear infinite; }
+@keyframes dashdraw { from { stroke-dashoffset: 10; } to { stroke-dashoffset: 0; } }
