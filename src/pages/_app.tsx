@@ -12,4 +12,6 @@ const MyApp = memo(({Component, pageProps}: AppProps): JSX.Element => {
   );
 });
 
+MyApp.displayName = 'MyApp';
+
 export default MyApp;

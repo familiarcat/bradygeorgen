@@ -1,7 +1,7 @@
-import classNames from 'classnames';
+import { cn } from '@/lib/utils';
 import {FC, memo, UIEventHandler, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import {isApple, isMobile} from '../../config';
+import {isApple, isMobile} from '@/config';
 import {SectionId, testimonial} from '../../data/data';
 import {Testimonial} from '../../data/dataDef';
 import useInterval from '../../hooks/useInterval';

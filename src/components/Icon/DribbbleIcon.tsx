@@ -35,4 +35,6 @@ const DribbbleIcon: FC<IconProps> = memo(props => (
   </Icon>
 ));
 
+DribbbleIcon.displayName = 'DribbbleIcon';
+
 export default DribbbleIcon;

@@ -19,4 +19,6 @@ const Icon: FC<IconProps> = memo(({children, className, svgRef, transform, ...pr
   </svg>
 ));
 
+Icon.displayName = 'Icon';
+
 export default Icon;

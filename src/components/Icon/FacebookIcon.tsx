@@ -10,4 +10,6 @@ const FacebookIcon: FC<IconProps> = memo(props => (
   </Icon>
 ));
 
+FacebookIcon.displayName = 'FacebookIcon';
+
 export default FacebookIcon;

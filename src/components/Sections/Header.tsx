@@ -17,7 +17,7 @@ const Header: FC = memo(() => {
   );
 
   const intersectionHandler = useCallback((section: SectionId | null) => {
-    section && setCurrentSection(section);
+    setCurrentSection(section);
   }, []);
 
   useNavObserver(navSections.map(section => `#${section}`).join(','), intersectionHandler);
@@ -54,6 +54,8 @@ const DesktopNav: FC<{navSections: SectionId[]; currentSection: SectionId | null
   },
 );
 
+DesktopNav.displayName = 'DesktopNav';
+
 const MobileNav: FC<{navSections: SectionId[]; currentSection: SectionId | null}> = memo(
   ({navSections, currentSection}) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -75,7 +77,7 @@ const MobileNav: FC<{navSections: SectionId[]; currentSection: SectionId | null}
           <Bars3BottomRightIcon className="h-8 w-8 text-white" />
           <span className="sr-only">Open sidebar</span>
         </button>
-        <Transition.Root as={Fragment} show={isOpen}>
+        <Transition show={isOpen} as={Fragment}>
           <Dialog as="div" className="fixed inset-0 z-40 flex sm:hidden" onClose={toggleOpen}>
             <Transition.Child
               as={Fragment}
@@ -85,7 +87,7 @@ const MobileNav: FC<{navSections: SectionId[]; currentSection: SectionId | null}
               leave="transition-opacity ease-linear duration-300"
               leaveFrom="opacity-100"
               leaveTo="opacity-0">
-              <Dialog.Overlay className="fixed inset-0 bg-stone-900 bg-opacity-75" />
+              <div className="fixed inset-0 bg-stone-900 bg-opacity-75" />
             </Transition.Child>
             <Transition.Child
               as={Fragment}
@@ -95,7 +97,7 @@ const MobileNav: FC<{navSections: SectionId[]; currentSection: SectionId | null}
               leave="transition ease-in-out duration-300 transform"
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full">
-              <div className="relative w-4/5 bg-stone-800">
+              <Dialog.Panel className="relative w-4/5 bg-stone-800">
                 <nav className="mt-5 flex flex-col gap-y-2 px-2">
                   {navSections.map(section => (
                     <NavItem
@@ -108,14 +110,16 @@ const MobileNav: FC<{navSections: SectionId[]; currentSection: SectionId | null}
                     />
                   ))}
                 </nav>
-              </div>
+              </Dialog.Panel>
             </Transition.Child>
           </Dialog>
-        </Transition.Root>
+        </Transition>
       </>
     );
   },
 );
+
+MobileNav.displayName = 'MobileNav';
 
 const NavItem: FC<{
   section: string;
@@ -134,6 +138,8 @@ const NavItem: FC<{
     </Link>
   );
 });
+
+NavItem.displayName = 'NavItem';
 
 Header.displayName = 'Header';
 export default Header;

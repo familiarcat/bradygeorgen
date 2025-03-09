@@ -12,4 +12,7 @@ const StackOverflowIcon: FC<IconProps> = memo(props => (
   </Icon>
 ));
 
+StackOverflowIcon.displayName = 'StackOverflowIcon';
+
+
 export default StackOverflowIcon;

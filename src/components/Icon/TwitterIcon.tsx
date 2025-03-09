@@ -10,4 +10,6 @@ const TwitterIcon: FC<IconProps> = memo(props => (
   </Icon>
 ));
 
+TwitterIcon.displayName = 'TwitterIcon';
+
 export default TwitterIcon;

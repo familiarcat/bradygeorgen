@@ -9,5 +9,5 @@ const LinkedInIcon: FC<IconProps> = memo(props => (
       fill="currentColor"></path>
   </Icon>
 ));
-
+LinkedInIcon.displayName = 'LinkedInIcon';
 export default LinkedInIcon;
