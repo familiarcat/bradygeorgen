@@ -13,7 +13,7 @@ import InstagramIcon from '../components/Icon/InstagramIcon';
 import LinkedInIcon from '../components/Icon/LinkedInIcon';
 import StackOverflowIcon from '../components/Icon/StackOverflowIcon';
 import TwitterIcon from '../components/Icon/TwitterIcon';
-import {ContactType, HomepageMeta, SkillGroup, TimelineItem} from './dataDef';
+import {ContactSection, ContactType, HomepageMeta, SkillGroup, Social, TimelineItem} from './dataDef';
 
 /**
  * Section ID enum for navigation
