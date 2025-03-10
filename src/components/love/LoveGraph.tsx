@@ -1,10 +1,11 @@
 'use client';
-import { useCallback } from 'react';
+import { FC } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { loveTypes } from '@/utils/loveData';
 import type { Node, Edge } from 'reactflow';
 import 'reactflow/dist/style.css';
+
 const ReactFlow = dynamic(() => import('reactflow'), {
   loading: () => (
     <div className="flex items-center justify-center h-full">
@@ -13,23 +14,41 @@ const ReactFlow = dynamic(() => import('reactflow'), {
   ),
   ssr: false
 });
+
 interface NodeData {
   id: string;
   label: string;
-  // Add other properties as needed
 }
+
 export const LoveGraph: FC = () => {
   const router = useRouter();
-  const handleNodeClick = (node: NodeData) => {
-    router.push("/love-visualization/" + node.id.toLowerCase() + "/");
+  
+  const handleNodeClick = (node: Node<NodeData>) => {
+    router.push(`/love-visualization/${node.id.toLowerCase()}/`);
   };
+
   const nodes: Node[] = loveTypes.map((love, i) => ({
     id: love.id,
     type: 'default',
-    data: { label: (<div className="p-2"><div className="font-bold">{love.label}</div><div className="text-sm">{love.description}</div></div>) },
+    data: { 
+      label: (
+        <div className="p-2">
+          <div className="font-bold">{love.label}</div>
+          <div className="text-sm">{love.description}</div>
+        </div>
+      ) 
+    },
     position: { x: 250 * (i % 4), y: 200 * Math.floor(i / 4) },
-    style: { background: love.color, color: '#fff', width: 220, borderRadius: '8px', border: 'none', cursor: 'pointer' },
+    style: { 
+      background: love.color, 
+      color: '#fff', 
+      width: 220, 
+      borderRadius: '8px', 
+      border: 'none', 
+      cursor: 'pointer' 
+    },
   }));
+
   const edges: Edge[] = [
     { id: 'e1-2', source: 'Eros', target: 'Philia', animated: true },
     { id: 'e2-3', source: 'Philia', target: 'Ludus', animated: true },
@@ -40,9 +59,18 @@ export const LoveGraph: FC = () => {
     { id: 'e7-8', source: 'Storge', target: 'Mania', animated: true },
     { id: 'e8-1', source: 'Mania', target: 'Eros', animated: true },
   ];
+
   return (
     <div className="h-[calc(100vh-120px)] border border-gray-700 rounded-lg overflow-hidden">
-      <ReactFlow nodes={nodes} edges={edges} onNodeClick={handleNodeClick} fitView attributionPosition="bottom-right" />
+      <ReactFlow 
+        nodes={nodes} 
+        edges={edges} 
+        onNodeClick={(_, node) => handleNodeClick(node)} 
+        fitView 
+        attributionPosition="bottom-right" 
+      />
     </div>
   );
-}
+};
+
+LoveGraph.displayName = 'LoveGraph';
