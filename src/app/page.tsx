@@ -3,6 +3,16 @@ import React from "react";
 import { ParallaxContainer, ParallaxLayer } from "@/components/parallax/ParallaxContainer";
 import { BentoGrid, BentoItem } from "@/components/bento/BentoGrid";
 import { motion } from "framer-motion";
+import Header from "@/components/Sections/Header";
+import About from "@/components/Sections/About";
+import Contact from "@/components/Sections/Contact";
+import Footer from "@/components/Sections/Footer";
+import Hero from "@/components/Sections/Hero";
+import Resume from "@/components/Sections/Resume";
+import Testimonials from "@/components/Sections/Testimonials";
+import Portfolio from "@/components/Sections/Portfolio";
+import Page from "@/components/Layout/Page";
+
 const cn = (...classes: (string | undefined)[]) => classes.filter(Boolean).join(" ");
 const scaleAnimation = { whileHover: { scale: 1.02, transition: { duration: 0.2, ease: "easeInOut" } } };
 const FeatureList: React.FC = () => (
@@ -37,8 +47,14 @@ const ContentSection: React.FC = () => (
           </BentoItem>
   </BentoGrid>
 );
+
+
+
 export default function Home() {
+  
+  console.log('index startup', process.env)
   return (
+    <>
     <ParallaxContainer>
       <ParallaxLayer speed={0.2} className="bg-gradient-to-br from-blue-900 to-purple-900" zIndex={0}>
         <div className="absolute inset-0" />
@@ -50,9 +66,20 @@ export default function Home() {
         </div>
       </ParallaxLayer>
       <div className="content-wrapper relative z-[2]">
+        <Page description="Brady Georgen's personal portfolio and resume website">
+        <Header />
+        <Hero />
+        <About />
+        <Resume />
+        <Portfolio /> 
+        <Testimonials />
+        <Contact />
+        <Footer />
+        </Page>
         <div className="min-h-screen w-full">
           <div className="container mx-auto px-4 py-8 md:py-12">
             <BentoGrid className="gap-3 md:gap-4 lg:gap-6">
+    
               <BentoItem colSpan={3} className="bg-white/5 min-h-48 md:min-h-64">
                 <div className="space-y-3 md:space-y-4">
                   <h1 className="text-3xl md:text-4xl font-bold">Nested Bento Grid</h1>
@@ -90,5 +117,6 @@ export default function Home() {
         </div>
       </div>
     </ParallaxContainer>
+    </>
   );
 }
