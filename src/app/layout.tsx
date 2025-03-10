@@ -1,21 +1,23 @@
-// src/app/layout.tsx
-import "./globals.css";
-import { Inter } from "next/font/google";
-import React from "react";
-import Link from "next/link";
+'use client';
 
-const inter = Inter({ subsets: ["latin"] });
+import "@/styles/globals.scss";
+import { useEffect } from 'react';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  useEffect(() => {
+    console.log('Root layout mounted');
+  }, []);
+
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <header className="bg-gray-800 text-white px-4 py-2 flex items-center space-x-4">
-          
-          <Link href="/">Home</Link>
-          <Link href="/love-visualization/">Love Visualization</Link>
-          <Link href="/resume/">Resume</Link>
-        </header>
+      <head>
+        <title>p.bradygeorgen</title>
+      </head>
+      <body style={{ margin: 0, padding: 0 }}>
         {children}
       </body>
     </html>

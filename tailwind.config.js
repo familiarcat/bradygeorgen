@@ -1,12 +1,30 @@
-import plugin from 'tailwindcss/plugin';
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,css,scss,mdx}'],
-  safelist: ['stroke-gray-400'],
   theme: {
     extend: {
       colors: {
         yellow: '#efc603',
+      },
+      fontSize: {
+        'xs': '.75rem',
+        'sm': '.875rem',
+        'base': '1rem',
+        'lg': '1.125rem',
+        'xl': '1.25rem',
+        '2xl': '1.5rem',
+        '3xl': '1.875rem',
+        '4xl': '2.25rem',
+        '5xl': '3rem',
+        '6xl': '4rem',
+      },
+      screens: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+        touch: { raw: 'only screen and (pointer: coarse)' },
       },
       keyframes: {
         typing: {
@@ -27,18 +45,10 @@ module.exports = {
           },
         },
       },
-      screens: {
-        touch: { raw: 'only screen and (pointer: coarse)' },
-      },
     },
   },
   plugins: [
-    import('@tailwindcss/forms'),
-    import('@tailwindcss/typography'),
-    plugin(function({ addUtilities }) {
-      addUtilities({
-        '.stroke-gray-400': { stroke: '#9CA3AF' },
-      }, ['responsive', 'hover'])
-    }),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography')
   ],
-}
+};
