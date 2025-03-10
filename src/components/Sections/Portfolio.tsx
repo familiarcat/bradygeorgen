@@ -1,12 +1,20 @@
+'use client';
+
 import {ArrowTopRightOnSquareIcon} from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import Image from 'next/image';
 import {FC, memo, useCallback, useEffect, useRef, useState, MouseEvent} from 'react';
-
 import {isMobile} from '../../config';
 import {portfolioItems, SectionId} from '../../data/data';
 import {useDetectOutsideClick} from '../../hooks/useDetectOutsideClick';
 import Section from '../Layout/Section';
+
+interface PortfolioItem {
+  title: string;
+  description: string;
+  url: string;
+  image: string;
+}
 
 const Portfolio: FC = memo(() => {
   return (

@@ -1,13 +1,25 @@
-import type { ReactNode } from 'react';
+'use client';
 
-interface PageProps {
+import {NextPage} from 'next';
+import Head from 'next/head';
+import {ReactNode} from 'react';
+
+export interface PageProps {
   children: ReactNode;
+  title?: string;
+  description?: string;
 }
 
-export default function Page({ children }: PageProps) {
+const Page: NextPage<PageProps> = ({children, title, description}) => {
   return (
-    <div className="min-h-screen">
+    <>
+      <Head>
+        {title && <title>{title}</title>}
+        {description && <meta name="description" content={description} />}
+      </Head>
       {children}
-    </div>
+    </>
   );
-}
+};
+
+export default Page;

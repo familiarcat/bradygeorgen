@@ -20,7 +20,7 @@ interface NodeData {
   label: string;
 }
 
-export const LoveGraph: FC = () => {
+const LoveGraph: FC = () => {
   const router = useRouter();
   
   const handleNodeClick = (node: Node<NodeData>) => {
@@ -73,4 +73,4 @@ export const LoveGraph: FC = () => {
   );
 };
 
-LoveGraph.displayName = 'LoveGraph';
+export default LoveGraph;

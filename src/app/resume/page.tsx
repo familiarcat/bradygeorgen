@@ -24,7 +24,7 @@ const ResumeContent: FC = memo(() => {
   const {title, description} = homePageMeta;
   
   return (
-    <Page description={description} title={title}>
+    <Page title={title} description={description}>
       <Header />
       <Hero />
       <About />
