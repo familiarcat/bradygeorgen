@@ -1,28 +1,11 @@
-import { useState, useEffect } from 'react';
+export const useWindow = () => {
+  const isClient = typeof window !== 'undefined';
+  return {
+    width: isClient ? window.innerWidth : undefined,
+    height: isClient ? window.innerHeight : undefined,
+    isClient,
+  };
+};
 
-interface WindowDimensions {
-  width: number;
-  height: number;
-}
-
-export function useWindow(): WindowDimensions {
-  const [windowDimensions, setWindowDimensions] = useState<WindowDimensions>({
-    width: 0,
-    height: 0,
-  });
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return windowDimensions;
-}
+// Add this line to maintain backwards compatibility
+export default useWindow;

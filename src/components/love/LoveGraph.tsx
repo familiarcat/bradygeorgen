@@ -13,11 +13,16 @@ const ReactFlow = dynamic(() => import('reactflow'), {
   ),
   ssr: false
 });
-export default function LoveGraph() {
+interface NodeData {
+  id: string;
+  label: string;
+  // Add other properties as needed
+}
+export const LoveGraph: FC = () => {
   const router = useRouter();
-  const onNodeClick = useCallback((_event: any, node: Node) => {
+  const handleNodeClick = (node: NodeData) => {
     router.push("/love-visualization/" + node.id.toLowerCase() + "/");
-  }, [router]);
+  };
   const nodes: Node[] = loveTypes.map((love, i) => ({
     id: love.id,
     type: 'default',
@@ -37,7 +42,7 @@ export default function LoveGraph() {
   ];
   return (
     <div className="h-[calc(100vh-120px)] border border-gray-700 rounded-lg overflow-hidden">
-      <ReactFlow nodes={nodes} edges={edges} onNodeClick={onNodeClick} fitView attributionPosition="bottom-right" />
+      <ReactFlow nodes={nodes} edges={edges} onNodeClick={handleNodeClick} fitView attributionPosition="bottom-right" />
     </div>
   );
 }

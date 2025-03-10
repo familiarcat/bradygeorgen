@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import {FC, memo, UIEventHandler, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import classNames from 'classnames';
+import Image from 'next/image';
 
 import {isApple, isMobile} from '@/config';
 import {SectionId, testimonial} from '../../data/data';
@@ -10,7 +11,11 @@ import useWindow from '../../hooks/useWindow';
 import QuoteIcon from '../Icon/QuoteIcon';
 import Section from '../Layout/Section';
 
-const Testimonials: FC = memo(() => {
+interface TestimonialsProps {
+  // Add your props here
+}
+
+const Testimonials: FC<TestimonialsProps> = memo(() => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [scrollValue, setScrollValue] = useState(0);
   const [parallaxEnabled, setParallaxEnabled] = useState(false);
