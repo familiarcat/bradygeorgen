@@ -1,41 +1,13 @@
-'use client';
+import type { ReactNode } from 'react';
 
-import {PropsWithChildren} from 'react';
-import {usePathname} from 'next/navigation';
-import {Metadata} from 'next';
+interface PageProps {
+  children: ReactNode;
+}
 
-import {HomepageMeta} from '../../data/dataDef';
-
-export type PageProps = PropsWithChildren<HomepageMeta>;
-
-const Page = ({children, title, description}: PageProps) => {
-  const pathname = usePathname();
-
+export default function Page({ children }: PageProps) {
   return (
-    <>
-      <title>{title}</title>
-      <meta content={description} name="description" />
-
-      {/* several domains list the same content, make sure google knows we mean this one. */}
-      <link href={`https://reactresume.com${pathname}`} key="canonical" rel="canonical" />
-
-      <link href="/favicon.ico" rel="icon" sizes="any" />
-      <link href="/icon.svg" rel="icon" type="image/svg+xml" />
-      <link href="/apple-touch-icon.png" rel="apple-touch-icon" />
-      <link href="/site.webmanifest" rel="manifest" />
-
-      {/* Open Graph : https://ogp.me/ */}
-      <meta content={title} property="og:title" />
-      <meta content={description} property="og:description" />
-      <meta content={`https://reactresume.com${pathname}`} property="og:url" />
-
-      {/* Twitter: https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup */}
-      <meta content={title} name="twitter:title" />
-      <meta content={description} name="twitter:description" />
-
+    <div className="min-h-screen">
       {children}
-    </>
+    </div>
   );
-};
-
-export default Page;
+}

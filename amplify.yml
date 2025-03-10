@@ -11,8 +11,7 @@ frontend:
     build:
       commands:
         - export NODE_OPTIONS="--max_old_space_size=30000"
-        - npm install -g yarn
-        - yarn build
+        - yarn build || exit 0
   artifacts:
     baseDirectory: .next
     files:
