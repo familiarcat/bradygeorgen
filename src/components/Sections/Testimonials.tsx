@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import {FC, memo, UIEventHandler, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import classNames from 'classnames';
 
 import {isApple, isMobile} from '@/config';
 import {SectionId, testimonial} from '../../data/data';
@@ -136,4 +137,5 @@ const Testimonial: FC<{testimonial: Testimonial; isActive: boolean}> = memo(
   ),
 );
 
+Testimonials.displayName = 'Testimonials';
 export default Testimonials;

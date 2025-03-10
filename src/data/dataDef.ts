@@ -79,8 +79,8 @@ export interface SkillGroup {
 export interface PortfolioItem {
   title: string;
   description: string;
+  image: string;
   url: string;
-  image: string | StaticImageData;
 }
 
 /**

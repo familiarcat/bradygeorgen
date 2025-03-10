@@ -13,62 +13,45 @@ import InstagramIcon from '../components/Icon/InstagramIcon';
 import LinkedInIcon from '../components/Icon/LinkedInIcon';
 import StackOverflowIcon from '../components/Icon/StackOverflowIcon';
 import TwitterIcon from '../components/Icon/TwitterIcon';
-import heroImage from '../images/header-background.webp';
-import porfolioImage1 from '../images/portfolio/portfolio-1.jpg';
-import porfolioImage2 from '../images/portfolio/portfolio-2.jpg';
-import porfolioImage3 from '../images/portfolio/portfolio-3.jpg';
-import porfolioImage4 from '../images/portfolio/portfolio-4.jpg';
-import porfolioImage5 from '../images/portfolio/portfolio-5.jpg';
-import porfolioImage6 from '../images/portfolio/portfolio-6.jpg';
-import porfolioImage7 from '../images/portfolio/portfolio-7.jpg';
-import porfolioImage8 from '../images/portfolio/portfolio-8.jpg';
-import porfolioImage9 from '../images/portfolio/portfolio-9.jpg';
-import porfolioImage10 from '../images/portfolio/portfolio-10.jpg';
-import porfolioImage11 from '../images/portfolio/portfolio-11.jpg';
-import profilepic from '../images/profilepic.jpg';
-import testimonialImage from '../images/testimonial.webp';
-import {
-  About,
-  ContactSection,
-  ContactType,
-  Hero,
-  HomepageMeta,
-  PortfolioItem,
-  SkillGroup,
-  Social,
-  TestimonialSection,
-  TimelineItem,
-} from './dataDef';
+import {ContactType, HomepageMeta, SkillGroup, TimelineItem} from './dataDef';
 
 /**
- * Page meta data
+ * Section ID enum for navigation
  */
-export const homePageMeta: HomepageMeta = {
-  title: 'React Resume Template',
-  description: "Example site built with Tim Baker's react resume template",
-};
+export enum SectionId {
+  Hero = 'hero',
+  About = 'about',
+  Contact = 'contact',
+  Portfolio = 'portfolio',
+  Resume = 'resume',
+  Skills = 'skills',
+  Stats = 'stats',
+  Testimonials = 'testimonials',
+}
 
-/**
- * Section definition
- */
-export const SectionId = {
-  Hero: 'hero',
-  About: 'about',
-  Contact: 'contact',
-  Portfolio: 'portfolio',
-  Resume: 'resume',
-  Skills: 'skills',
-  Stats: 'stats',
-  Testimonials: 'testimonials',
+// Use string paths instead of imports
+const images = {
+  profile: '/images/profile.jpg',
+  testimonial: '/images/testimonial.webp',
+  portfolio: {
+    portfolio1: '/images/portfolio/portfolio-1.jpg',
+    portfolio2: '/images/portfolio/portfolio-2.jpg',
+    portfolio3: '/images/portfolio/portfolio-3.jpg',
+    portfolio4: '/images/portfolio/portfolio-4.jpg',
+    portfolio5: '/images/portfolio/portfolio-5.jpg',
+    portfolio6: '/images/portfolio/portfolio-6.jpg',
+    portfolio7: '/images/portfolio/portfolio-7.jpg',
+    portfolio8: '/images/portfolio/portfolio-8.jpg',
+    portfolio9: '/images/portfolio/portfolio-9.jpg',
+    portfolio10: '/images/portfolio/portfolio-10.jpg',
+  }
 } as const;
-
-export type SectionId = (typeof SectionId)[keyof typeof SectionId];
 
 /**
  * Hero section
  */
-export const heroData: Hero = {
-  imageSrc: heroImage.src,
+export const heroData = {
+  imageSrc: images.profile,
   name: `I'm Brady Georgen.`,
   description: (
     <>
@@ -102,8 +85,8 @@ export const heroData: Hero = {
 /**
  * About section
  */
-export const aboutData: About = {
-  profileImageSrc: profilepic.src,
+export const aboutData = {
+  profileImageSrc: images.profile,
   description: `Use this bio section as your way of describing yourself and saying what you do, what technologies you like
   to use or feel most comfortable with, describing your personality, or whatever else you feel like throwing
   in.`,
@@ -194,72 +177,48 @@ export const skills: SkillGroup[] = [
 /**
  * Portfolio section
  */
-export const portfolioItems: PortfolioItem[] = [
+export const portfolioItems = [
   {
     title: 'Project title 1',
     description: 'Give a short description of your project here.',
     url: 'https://reactresume.com',
-    image: porfolioImage1,
+    image: images.portfolio.portfolio1,
   },
   {
     title: 'Project title 2',
     description: 'Give a short description of your project here.',
     url: 'https://reactresume.com',
-    image: porfolioImage2,
+    image: images.portfolio.portfolio2,
   },
   {
     title: 'Project title 3',
     description: 'Give a short description of your project here.',
     url: 'https://reactresume.com',
-    image: porfolioImage3,
+    image: images.portfolio.portfolio3,
   },
   {
     title: 'Project title 4',
     description: 'Give a short description of your project here.',
     url: 'https://reactresume.com',
-    image: porfolioImage4,
+    image: images.portfolio.portfolio4,
   },
   {
     title: 'Project title 5',
     description: 'Give a short description of your project here.',
     url: 'https://reactresume.com',
-    image: porfolioImage5,
+    image: images.portfolio.portfolio5,
   },
   {
     title: 'Project title 6',
     description: 'Give a short description of your project here.',
     url: 'https://reactresume.com',
-    image: porfolioImage6,
+    image: images.portfolio.portfolio6,
   },
   {
     title: 'Project title 7',
     description: 'Give a short description of your project here.',
     url: 'https://reactresume.com',
-    image: porfolioImage7,
-  },
-  {
-    title: 'Project title 8',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage8,
-  },
-  {
-    title: 'Project title 9',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage9,
-  },
-  {
-    title: 'Project title 10',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage10,
-  },
-  {
-    title: 'Project title 11',
-    description: 'Give a short description of your project here.',
-    url: 'https://reactresume.com',
-    image: porfolioImage11,
+    image: images.portfolio.portfolio7,
   },
 ];
 
@@ -309,8 +268,8 @@ export const experience: TimelineItem[] = [
 /**
  * Testimonial section
  */
-export const testimonial: TestimonialSection = {
-  imageSrc: testimonialImage,
+export const testimonial = {
+  imageSrc: images.testimonial,
   testimonials: [
     {
       name: 'John Doe',
@@ -371,3 +330,11 @@ export const socialLinks: Social[] = [
   {label: 'Instagram', Icon: InstagramIcon, href: 'https://www.instagram.com/reactresume/'},
   {label: 'Twitter', Icon: TwitterIcon, href: 'https://twitter.com/TimBakerx'},
 ];
+
+/**
+ * Homepage metadata
+ */
+export const homePageMeta: HomepageMeta = {
+  title: 'Brady Georgen - Software Engineer',
+  description: "Brady Georgen's personal portfolio and resume website",
+};

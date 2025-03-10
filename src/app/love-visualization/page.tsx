@@ -1,8 +1,13 @@
+import type { Metadata } from 'next';
 import LoveGraphWrapper from '@/components/love/LoveGraphWrapper';
-export const metadata = {
-  title: 'Love Visualization - Eight Types of Greek Love',
-  description: 'Interactive visualization of the eight types of Greek love',
-};
+
+export function generateMetadata(): Metadata {
+  return {
+    title: 'Love Visualization - Eight Types of Greek Love',
+    description: 'Interactive visualization of the eight types of Greek love',
+  };
+}
+
 export default function Page() {
   return (
     <main className="p-4">

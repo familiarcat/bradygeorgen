@@ -1,8 +1,5 @@
 import React from "react";
-export const metadata = {
-  title: "Edit Resume Content",
-  description: "Update your resume data using the generated forms."
-};
+
 export default function UpdateContentPage() {
   return (
     <main className="p-4">

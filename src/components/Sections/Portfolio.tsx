@@ -1,12 +1,11 @@
 import {ArrowTopRightOnSquareIcon} from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import Image from 'next/image';
-import {FC, memo, MouseEvent, useCallback, useEffect, useRef, useState} from 'react';
+import {FC, memo, useCallback, useEffect, useRef, useState, MouseEvent} from 'react';
 
 import {isMobile} from '../../config';
 import {portfolioItems, SectionId} from '../../data/data';
-import {PortfolioItem} from '../../data/dataDef';
-import useDetectOutsideClick from '../../hooks/useDetectOutsideClick';
+import {useDetectOutsideClick} from '../../hooks/useDetectOutsideClick';
 import Section from '../Layout/Section';
 
 const Portfolio: FC = memo(() => {
@@ -14,16 +13,24 @@ const Portfolio: FC = memo(() => {
     <Section className="bg-neutral-800" sectionId={SectionId.Portfolio}>
       <div className="flex flex-col gap-y-8">
         <h2 className="self-center text-xl font-bold text-white">Check out some of my work</h2>
-        <div className=" w-full columns-2 md:columns-3 lg:columns-4">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {portfolioItems.map((item, index) => {
             const {title, image} = item;
             return (
-              <div className="pb-6" key={`${title}-${index}`}>
+              <div className="col-span-1" key={`${title}-${index}`}>
                 <div
                   className={classNames(
-                    'relative h-max w-full overflow-hidden rounded-lg shadow-lg shadow-black/30 lg:shadow-xl',
+                    'relative h-0 w-full overflow-hidden rounded-lg shadow-lg',
+                    'pb-[100%]',
                   )}>
-                  <Image alt={title} className="h-full w-full" placeholder="blur" src={image} />
+                  <Image
+                    alt={title}
+                    className="h-full w-full object-cover"
+                    src={image}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={85}
+                  />
                   <ItemOverlay item={item} />
                 </div>
               </div>

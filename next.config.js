@@ -4,7 +4,16 @@ const nextConfig = {
   transpilePackages: ["framer-motion", "reactflow"],
   eslint: { ignoreDuringBuilds: true },
   output: 'standalone',
-  images: { domains: ['localhost'], unoptimized: true },
+  images: { 
+    domains: ['localhost'],
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
   trailingSlash: true,
   productionBrowserSourceMaps: false,
 };

@@ -1,6 +1,9 @@
 import {RefObject, useEffect} from 'react';
 
-const useDetectOutsideClick = <T extends HTMLElement>(ref: RefObject<T>, handler: (event: Event) => void) => {
+export const useDetectOutsideClick = <T extends HTMLElement>(
+  ref: RefObject<T>, 
+  handler: (event: Event) => void
+) => {
   useEffect(() => {
     const listener = (event: Event) => {
       // Do nothing if clicking ref's element or descendent elements
@@ -18,4 +21,4 @@ const useDetectOutsideClick = <T extends HTMLElement>(ref: RefObject<T>, handler
   }, [ref, handler]);
 };
 
-export default useDetectOutsideClick;
+// Remove default export
