@@ -12,9 +12,9 @@ frontend:
       commands:
         - export NODE_OPTIONS="--max_old_space_size=30000"
         - yarn build
-        - ls -la .next/standalone
+        - ls -la .next
   artifacts:
-    baseDirectory: .next/standalone
+    baseDirectory: .next
     files:
       - '**/*'
     discard-paths: no
