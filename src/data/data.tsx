@@ -30,7 +30,7 @@ export enum SectionId {
 }
 
 // Use string paths instead of imports
-const images = {
+export const images = {
   profile: '/images/profile.jpg',
   testimonial: '/images/testimonial.webp',
   portfolio: {

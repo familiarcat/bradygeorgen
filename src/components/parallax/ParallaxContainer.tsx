@@ -7,9 +7,9 @@ export function ParallaxLayer({ children, speed = 1, className = '', zIndex = 0 
   const ref = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const yTransform = useTransform(scrollY, [0, 1000], [0, -200 * speed]);
-  return <motion.div ref={ref} style={{ y: yTransform, zIndex }} className={cn('absolute w-full h-full', className)}>{children}</motion.div>;
+  return <motion.div ref={ref} style={{ y: yTransform, zIndex }} className={cn('absolute w-screen h-full', className)}>{children}</motion.div>;
 }
 interface ParallaxContainerProps { children: ReactNode; className?: string; }
 export function ParallaxContainer({ children, className = '' }: ParallaxContainerProps) {
-  return <div className={cn('relative w-full h-screen overflow-x-hidden overflow-y-auto', className)}>{children}</div>;
+  return <div className={cn('relative w-screen h-screen overflow-x-hidden overflow-y-auto scrollbar-hide', className)}>{children}</div>;
 }

@@ -5,27 +5,103 @@
  * This script seeds data for all Amplify Gen 2 models by reading a single JSON file
  * from the 'resumes' folder (brady_resume.json).
  */
-const { DynamoDBClient, ListTablesCommand } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocumentClient, UpdateCommand } = require("@aws-sdk/lib-dynamodb");
-const fs = require("fs");
-const path = require("path");
-const crypto = require("crypto");
+import { DynamoDBClient, ListTablesCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { existsSync, readFileSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from 'url';
+import { randomUUID } from "crypto";
+
+// Fix for __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 console.log('AWS Access Key ID:', process.env.AWS_ACCESS_KEY_ID);
 console.log('AWS Region:', process.env.AWS_REGION);
 const UNIQUE_ID = process.env.UNIQUE_ID || "defaultUniqueId";
-const models = [
-  { name: "Resume", keyField: "id" },
-  { name: "Summary", keyField: "id" },
-  { name: "ContactInformation", keyField: "id" },
-  { name: "Reference", keyField: "id" },
-  { name: "Education", keyField: "id" },
-  { name: "School", keyField: "id" },
-  { name: "Degree", keyField: "id" },
-  { name: "Experience", keyField: "id" },
-  { name: "Company", keyField: "id" },
-  { name: "Engagement", keyField: "id" },
-  { name: "Accomplishment", keyField: "id" },
-  { name: "Skill", keyField: "id" }
+/** 
+ * Define the data models and their seeding functions.
+ * This array is used by the upsertRecord function to seed data into DynamoDB tables.
+ * @type {Array<{name: string, keyField: string, seedFn: Function}>}
+ */
+export const models = [
+  { name: "Resume", keyField: "id", seedFn: (resume) => ({
+    title: resume.title,
+    summaryId: resume.summaryId,
+    contactInformationId: resume.contactInformationId,
+    educationId: resume.educationId,
+    experienceId: resume.experienceId
+  })},
+  { name: "Summary", keyField: "id", seedFn: (summary) => ({
+    goals: summary.summary?.goals || "",
+    persona: summary.summary?.persona || "",
+    url: summary.summary?.url || "",
+    headshot: summary.summary?.headshot || "",
+    gptResponse: summary.summary?.gptResponse || "",
+    resume: summary.summary?.resume || ""
+  })},
+  { name: "ContactInformation", keyField: "id", seedFn: (contact) => ({
+    name: contact.contactInformation?.name || "",
+    email: contact.contactInformation?.email || "",
+    phone: contact.contactInformation?.phone || "",
+    resume: contact.contactInformation?.resume || ""
+  })},
+  { name: "Reference", keyField: "id", seedFn: (reference) => ({
+    name: reference.name || "",
+    phone: reference.phone || "",
+    email: reference.email || "",
+    contactInformationId: reference.contactInformationId || ""
+  })},
+  { name: "Education", keyField: "id", seedFn: (education) => ({
+    summary: education.education.summary || "",
+    resume: education.education.resume || ""
+  })},
+  { name: "School", keyField: "id", seedFn: (school) => ({
+    name: school.name || "",
+    educationId: school.educationId || ""
+  })},
+  { name: "Degree", keyField: "id", seedFn: (degree) => ({
+    major: degree.major || "",
+    startYear: degree.startYear || "",
+    endYear: degree.endYear || "",
+    schoolId: degree.schoolId || ""
+  })},
+  { name: "Experience", keyField: "id", seedFn: (experience) => ({
+    title: experience.experience.title || "",
+    text: experience.experience.text || "",
+    gptResponse: experience.experience.gptResponse || "",
+    resume: experience.experience.resume || ""
+  })},
+  { name: "Company", keyField: "id", seedFn: (company) => ({
+    name: company.name || "",
+    role: company.role || "",
+    startDate: company.startDate || "",
+    endDate: company.endDate || "",
+    title: company.title || "",
+    gptResponse: company.gptResponse || "",
+    experienceId: company.experienceId || ""
+  })},
+  { name: "Engagement", keyField: "id", seedFn: (engagement) => ({
+    client: engagement.client || "",
+    startDate: engagement.startDate || "",
+    endDate: engagement.endDate || "",
+    gptResponse: engagement.gptResponse || "",
+    companyId: engagement.companyId || ""
+  })},
+  { name: "Accomplishment", keyField: "id", seedFn: (accomplishment) => ({
+    title: accomplishment.title || "",
+    description: accomplishment.description || "",
+    link: accomplishment.link || "",
+    companyId: accomplishment.companyId || "",
+    engagementId: accomplishment.engagementId || ""
+  })},
+  { name: "Skill", keyField: "id", seedFn: (skill) => ({
+    title: skill.title || "",
+    link: skill.link || "",
+    resumeId: skill.resumeId || "",
+    companyId: skill.companyId || "",
+    accomplishmentId: skill.accomplishmentId || ""
+  })}
 ];
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
@@ -59,7 +135,7 @@ async function findTableForModel(modelName, uniqueId) {
 }
 function buildUpdateParams(tableName, keyField, record, skipIfEmpty = []) {
   if (!record[keyField]) {
-    record[keyField] = crypto.randomUUID();
+    record[keyField] = randomUUID();
     console.log(`Auto-generated ${keyField}: ${record[keyField]}`);
   }
   const key = { [keyField]: record[keyField] };
@@ -111,14 +187,17 @@ async function upsertRecord(modelName, keyField, record) {
   }
 }
 async function seedData() {
-  const filePath = path.join(__dirname, "resumes", "brady_resume.json");
-  if (!fs.existsSync(filePath)) {
+  const filePath = join(__dirname, "..", "resumes", "brady_resume.json");
+  console.log('Looking for resume file at:', filePath);
+  
+  if (!existsSync(filePath)) {
     console.error("Seed file not found:", filePath);
     return;
   }
+  
   let data;
   try {
-    const content = fs.readFileSync(filePath, "utf8");
+    const content = readFileSync(filePath, "utf8");
     data = JSON.parse(content);
   } catch (error) {
     console.error("Error reading/parsing seed file:", error);

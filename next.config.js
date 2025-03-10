@@ -4,9 +4,20 @@ const nextConfig = {
   images: {
     unoptimized: true,
     domains: [
-      // Add any image domains you're using
+      'localhost',
+      'cloudflare-ipfs.com' // For your testimonial avatar images
     ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      }
+    ]
   },
 }
 
-module.exports = nextConfig
+export default nextConfig;

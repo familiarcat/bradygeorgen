@@ -1,7 +1,7 @@
 "use client";
 import {Dialog, Transition} from '@headlessui/react';
 import {Bars3BottomRightIcon} from '@heroicons/react/24/outline';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Link from 'next/link';
 import {FC, Fragment, memo, useCallback, useMemo, useState} from 'react';
 
@@ -37,8 +37,8 @@ const DesktopNav: FC<{navSections: SectionId[]; currentSection: SectionId | null
       '-m-1.5 p-1.5 rounded-md font-bold first-letter:uppercase hover:transition-colors hover:duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500';
     
     // Remove text color from baseClass and use !important for active state
-    const activeClass = classNames(baseClass, '!text-orange-500');
-    const inactiveClass = classNames(baseClass, 'text-neutral-100');
+    const activeClass = clsx(baseClass, 'text-orange-500');
+    const inactiveClass = clsx(baseClass, 'text-neutral-100');
     return (
       <header className="fixed top-0 z-50 hidden w-full bg-neutral-900/50 p-4 backdrop-blur sm:block" id={headerID}>
         <nav className="flex justify-center gap-x-8">
@@ -69,8 +69,8 @@ const MobileNav: FC<{navSections: SectionId[]; currentSection: SectionId | null}
 
     const baseClass =
       'p-2 rounded-md first-letter:uppercase transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500';
-    const activeClass = classNames(baseClass, 'bg-neutral-900 text-white font-bold');
-    const inactiveClass = classNames(baseClass, 'text-neutral-200 font-medium');
+    const activeClass = clsx(baseClass, 'bg-neutral-900 text-white font-bold');
+    const inactiveClass = clsx(baseClass, 'text-neutral-200 font-medium');
     return (
       <>
         <button
@@ -133,7 +133,7 @@ const NavItem: FC<{
 }> = memo(({section, current, inactiveClass, activeClass, onClick}) => {
   return (
     <Link
-      className={classNames(current ? activeClass : inactiveClass)}
+      className={clsx(current ? activeClass : inactiveClass)}
       href={`/#${section}`}
       key={section}
       onClick={onClick}>

@@ -7,8 +7,8 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className="overflow-x-hidden">
+      <body className="overflow-x-hidden scrollbar-hide">{children}</body>
     </html>
   );
 }
