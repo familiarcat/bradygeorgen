@@ -34,3 +34,20 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Setup
+
+1. Copy `.env.local.example` to `.env.local`
+2. Add your AWS credentials to `.env.local`
+3. Never commit `.env.local` to version control
+
+## AWS Credentials
+
+This project requires AWS credentials to be set up in one of the following ways:
+
+1. Environment variables in `.env.local`
+2. AWS credentials file (`~/.aws/credentials`)
+3. AWS CLI configuration
+4. IAM role (when running on AWS services)
+
+For local development, we recommend using `.env.local` or AWS credentials file.

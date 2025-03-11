@@ -13,7 +13,6 @@ import {
   DeleteTableCommand
 } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, UpdateCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
-import { fromIni } from "@aws-sdk/credential-provider-ini";
 import { existsSync, readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -44,17 +43,10 @@ async function checkCredentials() {
 
 // Initialize DynamoDB client with explicit credentials
 const initializeDynamoDBClient = () => {
-  // Force using 'default' profile before any AWS SDK operations
-  process.env.AWS_PROFILE = 'default';
-  
+  // Use AWS SDK's default credential provider chain instead of explicit credentials
   const config = {
-    region: process.env.AWS_REGION || 'us-east-2',
-    credentials: fromIni({
-      profile: 'default'
-    })
+    region: process.env.AWS_REGION || 'us-east-2'
   };
-
-  console.log('Using AWS Profile:', process.env.AWS_PROFILE);
   
   const client = new DynamoDBClient(config);
   return DynamoDBDocumentClient.from(client);
