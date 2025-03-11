@@ -3,25 +3,81 @@
  * seedData.js
  *
  * This script seeds data for all Amplify Gen 2 models by reading a single JSON file
- * from the 'resumes' folder (brady_resume.json).
+ * from the 'resumes' folder (brady_resume.json). It will create any missing DynamoDB
+ * tables automatically and insert default values (empty strings) for any missing properties.
  */
-import { DynamoDBClient, ListTablesCommand } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import {
+  DynamoDBClient,
+  CreateTableCommand,
+  DescribeTableCommand,
+  DeleteTableCommand
+} from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, UpdateCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
+import { fromIni } from "@aws-sdk/credential-provider-ini";
 import { existsSync, readFileSync } from "fs";
 import { join, dirname } from "path";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 import { randomUUID } from "crypto";
 
 // Fix for __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-console.log('AWS Access Key ID:', process.env.AWS_ACCESS_KEY_ID);
-console.log('AWS Region:', process.env.AWS_REGION);
+// Add credential debugging
+async function checkCredentials() {
+  // Clear any existing AWS credentials from environment
+  delete process.env.AWS_ACCESS_KEY_ID;
+  delete process.env.AWS_SECRET_ACCESS_KEY;
+  delete process.env.AWS_SESSION_TOKEN;
+  
+  // Force default profile
+  process.env.AWS_PROFILE = 'default';
+  
+  console.log('\nChecking AWS credentials...');
+  console.log('-------------------------');
+  console.log('Forced AWS Profile: default');
+  console.log('AWS_PROFILE:', process.env.AWS_PROFILE);
+  console.log('AWS_REGION:', process.env.AWS_REGION || 'us-east-2');
+  console.log('UNIQUE_ID:', process.env.UNIQUE_ID || 'defaultUniqueId');
+  console.log('-------------------------\n');
+}
+
+// Initialize DynamoDB client with explicit credentials
+const initializeDynamoDBClient = () => {
+  // Force using 'default' profile before any AWS SDK operations
+  process.env.AWS_PROFILE = 'default';
+  
+  const config = {
+    region: process.env.AWS_REGION || 'us-east-2',
+    credentials: fromIni({
+      profile: 'default'
+    })
+  };
+
+  console.log('Using AWS Profile:', process.env.AWS_PROFILE);
+  
+  const client = new DynamoDBClient(config);
+  return DynamoDBDocumentClient.from(client);
+};
+
 const UNIQUE_ID = process.env.UNIQUE_ID || "defaultUniqueId";
+const documentClient = initializeDynamoDBClient();
+
+// Base table configuration
+const baseTableConfig = {
+  BillingMode: "PAY_PER_REQUEST",
+  AttributeDefinitions: [
+    { AttributeName: "id", AttributeType: "S" }
+  ],
+  KeySchema: [
+    { AttributeName: "id", KeyType: "HASH" }
+  ]
+};
+
 /** 
  * Define the data models and their seeding functions.
- * This array is used by the upsertRecord function to seed data into DynamoDB tables.
+ * Each model object includes the model name, the key field, and a function to
+ * extract the seeding data from the seed JSON.
  * @type {Array<{name: string, keyField: string, seedFn: Function}>}
  */
 export const models = [
@@ -103,37 +159,244 @@ export const models = [
     accomplishmentId: skill.accomplishmentId || ""
   })}
 ];
-const client = new DynamoDBClient({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
-});
-const documentClient = DynamoDBDocumentClient.from(client);
-async function findTableForModel(modelName, uniqueId) {
+
+/**
+ * Deletes a table if it exists and waits for deletion to complete
+ * @param {string} tableName
+ * @returns {Promise<void>}
+ */
+async function deleteTableIfExists(tableName) {
   try {
-    const listCommand = new ListTablesCommand({});
-    const result = await client.send(listCommand);
-    if (!result.TableNames || result.TableNames.length === 0) {
-      console.error("No DynamoDB tables found.");
-      return null;
+    console.log(`Attempting to delete existing table: ${tableName}`);
+    const deleteCommand = new DeleteTableCommand({ TableName: tableName });
+    await documentClient.send(deleteCommand);
+    
+    // Wait for table deletion
+    const maxWaitTime = 60000;
+    const startTime = Date.now();
+    
+    while (true) {
+      try {
+        const describeCommand = new DescribeTableCommand({ TableName: tableName });
+        await documentClient.send(describeCommand);
+        
+        if (Date.now() - startTime > maxWaitTime) {
+          throw new Error('Table deletion timeout');
+        }
+        
+        console.log(`Waiting for table ${tableName} to be deleted...`);
+        await new Promise(resolve => setTimeout(resolve, 5000));
+      } catch (error) {
+        if (error.name === 'ResourceNotFoundException') {
+          console.log(`Table ${tableName} has been deleted`);
+          return;
+        }
+        throw error;
+      }
     }
-    const tableName = result.TableNames.find(name =>
-      name.includes(modelName) && name.includes(uniqueId)
-    );
-    if (!tableName) {
-      console.error(`No table found for model ${modelName} with unique ID ${uniqueId}`);
-      return null;
-    }
-    console.log(`Found table for ${modelName}: ${tableName}`);
-    return tableName;
   } catch (error) {
-    console.error("Error listing tables:", error);
+    if (error.name === 'ResourceNotFoundException') {
+      console.log(`Table ${tableName} does not exist, proceeding with creation`);
+      return;
+    }
+    throw error;
+  }
+}
+
+/**
+ * Creates a new DynamoDB table for the given model, deleting any existing table first.
+ * @param {string} modelName
+ * @param {string} uniqueId
+ * @returns {Promise<string|null>} The table name if created/found, otherwise null.
+ */
+async function createTableForModel(modelName, uniqueId) {
+  const tableName = `${modelName}-${uniqueId}`;
+  
+  try {
+    // Delete existing table first
+    await deleteTableIfExists(tableName);
+    
+    console.log(`Creating new table: ${tableName}`);
+    
+    const createCommand = new CreateTableCommand({
+      TableName: tableName,
+      ...baseTableConfig
+    });
+    
+    await documentClient.send(createCommand);
+    console.log(`Table creation initiated for: ${tableName}`);
+
+    // Wait for table to become active
+    const maxWaitTime = 60000;
+    const startTime = Date.now();
+    
+    while (true) {
+      try {
+        const describeCommand = new DescribeTableCommand({ TableName: tableName });
+        const response = await documentClient.send(describeCommand);
+        
+        if (response.Table.TableStatus === 'ACTIVE') {
+          console.log(`Table ${tableName} is now active`);
+          return tableName;
+        }
+        
+        if (Date.now() - startTime > maxWaitTime) {
+          throw new Error('Table creation timeout');
+        }
+        
+        console.log(`Waiting for table ${tableName} to become active... Current status: ${response.Table.TableStatus}`);
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        
+      } catch (error) {
+        if (error.name === 'ResourceNotFoundException') {
+          console.log(`Table ${tableName} not ready yet, waiting...`);
+          await new Promise(resolve => setTimeout(resolve, 5000));
+          continue;
+        }
+        throw error;
+      }
+    }
+  } catch (error) {
+    console.error(`Error creating table ${tableName}:`, error);
     return null;
   }
 }
-function buildUpdateParams(tableName, keyField, record, skipIfEmpty = []) {
+
+/**
+ * Finds or creates a table for a given model, ensuring a fresh table if it already exists.
+ * @param {string} modelName
+ * @param {string} uniqueId
+ * @returns {Promise<string|null>} The table name if created, otherwise null.
+ */
+async function findTableForModel(modelName, uniqueId) {
+  const tableName = `${modelName}-${uniqueId}`;
+  
+  try {
+    // Check if table exists
+    const describeCommand = new DescribeTableCommand({ TableName: tableName });
+    try {
+      await documentClient.send(describeCommand);
+      console.log(`Table ${tableName} already exists, skipping creation`);
+      return tableName;
+    } catch (error) {
+      if (error.name === 'ResourceNotFoundException') {
+        // Table doesn't exist, create it
+        return await createTableForModel(modelName, uniqueId);
+      }
+      throw error;
+    }
+  } catch (error) {
+    console.error("Error finding/creating table:", error);
+    console.error("Full error details:", JSON.stringify(error, null, 2));
+    return null;
+  }
+}
+
+/**
+ * Define unique identifier fields for each model type
+ * @type {Object.<string, string[]>}
+ */
+const MODEL_UNIQUE_IDENTIFIERS = {
+  'Resume': ['title'],
+  'Summary': ['resume'],
+  'ContactInformation': ['name', 'email'],
+  'Reference': ['name', 'contactInformationId'],
+  'Education': ['resume'],
+  'School': ['name', 'educationId'],
+  'Degree': ['major', 'schoolId'],
+  'Experience': ['resume'],
+  'Company': ['name', 'experienceId'],
+  'Engagement': ['client', 'companyId'],
+  'Accomplishment': ['title', 'companyId'],
+  'Skill': ['title', 'resumeId']
+};
+
+/**
+ * Checks if a record already exists with the same content based on model-specific unique identifiers
+ * @param {string} tableName
+ * @param {Object} record
+ * @returns {Promise<boolean>}
+ */
+async function isRecordDuplicate(tableName, record) {
+  try {
+    // Extract model name from table name (e.g., "Resume-defaultUniqueId" -> "Resume")
+    const modelName = tableName.split('-')[0];
+    
+    // Get unique identifier fields for this model
+    const uniqueFields = MODEL_UNIQUE_IDENTIFIERS[modelName];
+    if (!uniqueFields) {
+      console.warn(`No unique identifiers defined for model ${modelName}, using all non-empty fields`);
+      // Fallback to comparing all non-empty fields except id
+      const relevantFields = Object.entries(record)
+        .filter(([key, value]) => 
+          key !== 'id' && 
+          value !== undefined && 
+          value !== null && 
+          value !== ''
+        );
+
+      if (relevantFields.length === 0) return false;
+
+      const scanCommand = new ScanCommand({
+        TableName: tableName,
+        FilterExpression: relevantFields
+          .map(([key]) => `#${key} = :${key}`)
+          .join(' AND '),
+        ExpressionAttributeNames: relevantFields
+          .reduce((acc, [key]) => ({ ...acc, [`#${key}`]: key }), {}),
+        ExpressionAttributeValues: relevantFields
+          .reduce((acc, [key, value]) => ({ ...acc, [`:${key}`]: value }), {})
+      });
+
+      const result = await documentClient.send(scanCommand);
+      return result.Items && result.Items.length > 0;
+    }
+
+    // Check only the unique identifier fields
+    const filterExpressions = [];
+    const expressionAttributeNames = {};
+    const expressionAttributeValues = {};
+
+    for (const field of uniqueFields) {
+      if (record[field] !== undefined && record[field] !== null && record[field] !== '') {
+        filterExpressions.push(`#${field} = :${field}`);
+        expressionAttributeNames[`#${field}`] = field;
+        expressionAttributeValues[`:${field}`] = record[field];
+      }
+    }
+
+    // If none of the unique identifier fields have values, return false
+    if (filterExpressions.length === 0) {
+      return false;
+    }
+
+    const scanCommand = new ScanCommand({
+      TableName: tableName,
+      FilterExpression: filterExpressions.join(' AND '),
+      ExpressionAttributeNames: expressionAttributeNames,
+      ExpressionAttributeValues: expressionAttributeValues
+    });
+
+    const result = await documentClient.send(scanCommand);
+    if (result.Items && result.Items.length > 0) {
+      console.log(`Found duplicate ${modelName} record with matching unique identifiers:`, 
+        uniqueFields.reduce((acc, field) => ({ ...acc, [field]: record[field] }), {}));
+      return true;
+    }
+    return false;
+
+  } catch (error) {
+    console.error(`Error checking for duplicate record in ${tableName}:`, error);
+    return false;
+  }
+}
+
+/**
+ * Builds update parameters for the UpdateCommand.
+ * This version does not skip any attribute; if a property is missing or empty,
+ * a default value (empty string) is used.
+ */
+function buildUpdateParams(tableName, keyField, record) {
   if (!record[keyField]) {
     record[keyField] = randomUUID();
     console.log(`Auto-generated ${keyField}: ${record[keyField]}`);
@@ -144,13 +407,18 @@ function buildUpdateParams(tableName, keyField, record, skipIfEmpty = []) {
   const updateExprParts = [];
   const exprAttrValues = {};
   const exprAttrNames = {};
+
+  // Always include every attribute. If missing or empty, assign a default empty string.
   for (const attr in attributes) {
-    if (skipIfEmpty.includes(attr) && (!attributes[attr] || attributes[attr] === "")) continue;
+    let value = attributes[attr];
+    if (value === undefined || value === null || value === "") {
+      value = "";
+    }
     const attrPlaceholder = "#" + attr;
     const valuePlaceholder = ":" + attr;
     updateExprParts.push(`${attrPlaceholder} = ${valuePlaceholder}`);
     exprAttrNames[attrPlaceholder] = attr;
-    exprAttrValues[valuePlaceholder] = attributes[attr];
+    exprAttrValues[valuePlaceholder] = value;
   }
   if (updateExprParts.length === 0) return null;
   const updateExpression = "set " + updateExprParts.join(", ");
@@ -163,21 +431,29 @@ function buildUpdateParams(tableName, keyField, record, skipIfEmpty = []) {
     ReturnValues: "ALL_NEW"
   };
 }
+
+/**
+ * Upserts a record into the appropriate DynamoDB table.
+ */
 async function upsertRecord(modelName, keyField, record) {
   const tableName = await findTableForModel(modelName, UNIQUE_ID);
   if (!tableName) {
-    console.error(`Skipping ${modelName} because no table was found.`);
+    console.error(`Skipping ${modelName} because no table was found or created.`);
     return;
   }
-  let skipIfEmpty = [];
-  if (modelName === "Skill") {
-    skipIfEmpty = ["resumeId", "companyId", "accomplishmentId"];
+
+  // Check for duplicates before upserting
+  if (await isRecordDuplicate(tableName, record)) {
+    console.log(`Skipping duplicate ${modelName} record`);
+    return;
   }
-  const params = buildUpdateParams(tableName, keyField, record, skipIfEmpty);
+
+  const params = buildUpdateParams(tableName, keyField, record);
   if (!params) {
     console.warn(`Nothing to update for ${modelName} record with key ${record[keyField]}`);
     return;
   }
+
   try {
     const command = new UpdateCommand(params);
     const result = await documentClient.send(command);
@@ -186,8 +462,12 @@ async function upsertRecord(modelName, keyField, record) {
     console.error(`Error upserting ${modelName} record:`, err);
   }
 }
+
+/**
+ * Seeds data into DynamoDB tables from the provided seed file.
+ */
 async function seedData() {
-  const filePath = join(__dirname, "..", "resumes", "brady_resume.json");
+  const filePath = join(__dirname, "resumes", "brady_resume.json");
   console.log('Looking for resume file at:', filePath);
   
   if (!existsSync(filePath)) {
@@ -321,7 +601,7 @@ async function seedData() {
       const skillRecord = {
         title: skill.title || "",
         link: skill.link || "",
-        resumeId: data.resumeId || "",
+        resumeId: skill.resumeId || "",
         companyId: skill.companyId || "",
         accomplishmentId: skill.accomplishmentId || ""
       };
@@ -329,4 +609,14 @@ async function seedData() {
     }
   }
 }
-seedData();
+
+// Modify the main execution to include credential check
+async function main() {
+  await checkCredentials();
+  await seedData();
+}
+
+main().catch(error => {
+  console.error("Script failed:", error);
+  process.exit(1);
+});
